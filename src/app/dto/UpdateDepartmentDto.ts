@@ -1,9 +1,11 @@
-
 import { IsNumber, IsString, IsUUID } from "class-validator";
 
-export class CreateDepartmentDto {
+export class UpdateDepartmentDto {
     @IsString()
     public name: string;
+
+    // @IsUUID()
+    // public departmentId: string;
 
 
 }

@@ -5,8 +5,8 @@ export class CreateEmployeeDto {
     @IsString()
     public name: string;
 
-    // @IsString()
-    // public username: string;
+    @IsString()
+    public username: string;
 
     @IsNumber()
     public experience: number;
