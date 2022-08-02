@@ -24,7 +24,8 @@ export class EmployeeService {
         role:employeeDetails.role,
         departmentId: employeeDetails.departmentId,
         doj:employeeDetails.doj,
-        experience: employeeDetails.experience
+        experience: employeeDetails.experience,
+        password: employeeDetails.password
         // isActive: true,
       });
       const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);

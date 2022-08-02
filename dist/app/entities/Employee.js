@@ -40,6 +40,10 @@ __decorate([
     __metadata("design:type", String)
 ], Employee.prototype, "doj", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: "password" }),
+    __metadata("design:type", String)
+], Employee.prototype, "password", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => Department_1.Department, { cascade: true }),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Department_1.Department)

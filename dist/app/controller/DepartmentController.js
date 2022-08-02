@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const controller_1 = require("../util/rest/controller");
 const constants_1 = __importDefault(require("../constants"));
+const validationMiddleware_1 = __importDefault(require("../middleware/validationMiddleware"));
+const CreateDepartmentDto_1 = require("../dto/CreateDepartmentDto");
 class DepartmentController extends controller_1.AbstractController {
     constructor(departmentService) {
         super(`${constants_1.default.apiPrefix}/department`);
@@ -74,7 +76,7 @@ class DepartmentController extends controller_1.AbstractController {
         this.router.get(`${this.path}/:id`, this.getDepartmentById);
         this.router.put(`${this.path}/:id`, this.updateDepartmentById);
         this.router.delete(`${this.path}/:id`, this.deleteDepartmentById);
-        this.router.post(`${this.path}`, this.createDepartment);
+        this.router.post(`${this.path}`, (0, validationMiddleware_1.default)(CreateDepartmentDto_1.CreateDepartmentDto, constants_1.default.body), this.createDepartment);
     }
 }
 exports.default = DepartmentController;
