@@ -51,6 +51,15 @@ class EmployeeRespository {
             return employeeRepo.save(employeeDetails);
         });
     }
+    getEmployeeByName(userName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
+            const employeeDetail = yield employeeRepo.findOne({
+                where: { name: userName },
+            });
+            return employeeDetail;
+        });
+    }
 }
 exports.EmployeeRespository = EmployeeRespository;
 //# sourceMappingURL=EmployeeRepository.js.map

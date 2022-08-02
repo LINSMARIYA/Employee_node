@@ -9,6 +9,7 @@ const compression_1 = __importDefault(require("compression"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const express_1 = __importDefault(require("express"));
 const cors = require("cors");
+const errorMiddleware_1 = __importDefault(require("./middleware/errorMiddleware"));
 class App extends events_1.EventEmitter {
     constructor(controllers) {
         super();
@@ -16,6 +17,7 @@ class App extends events_1.EventEmitter {
         this.app.use(cors());
         this.initializeMiddlewares();
         this.initializeControllers(controllers);
+        this.initializaErrorHandling();
     }
     listen() {
         this.app.listen(process.env.PORT, () => {
@@ -34,6 +36,9 @@ class App extends events_1.EventEmitter {
             request.startTime = Date.now();
             next();
         });
+    }
+    initializaErrorHandling() {
+        this.app.use(errorMiddleware_1.default);
     }
     initializeControllers(controllers) {
         controllers.forEach((controller) => {

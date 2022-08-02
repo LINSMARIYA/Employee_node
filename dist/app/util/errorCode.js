@@ -17,6 +17,10 @@ exports.ErrorCodes = {
     VALIDATION_ERROR: {
         CODE: "VALIDATION_ERROR",
         MESSAGE: "Validation failed error",
+    },
+    INCORECT_USERNAME_PASSWORD_ERROR: {
+        CODE: "INCORRECT_USERNAME_AND_PASSWORD_ERROR",
+        MESSAGE: "Username or Password wrong",
     }
 };
 //# sourceMappingURL=errorCode.js.map

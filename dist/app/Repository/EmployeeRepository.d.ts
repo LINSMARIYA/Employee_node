@@ -5,4 +5,5 @@ export declare class EmployeeRespository {
     updateEmployeeDetails(employeeId: string, employeeDetails: any): Promise<import("typeorm").UpdateResult>;
     softDeleteEmployeeById(id: string): Promise<import("typeorm").UpdateResult>;
     saveEmployeeDetails(employeeDetails: Employee): Promise<Employee>;
+    getEmployeeByName(userName: string): Promise<Employee>;
 }

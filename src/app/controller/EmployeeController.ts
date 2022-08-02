@@ -5,6 +5,9 @@ import APP_CONSTANTS from "../constants";
 import { EmployeeService } from "../service/EmployeeService";
 import validationMiddleware from "../middleware/validationMiddleware";
 import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
+import { getConnection } from "typeorm";
+import { Employee } from "../entities/Employee";
+import authorize from "../middleware/authorize";
 
 
 class EmployeeController extends AbstractController {
@@ -13,7 +16,7 @@ class EmployeeController extends AbstractController {
     this.initializeRoutes();
   }
   protected initializeRoutes() {
-    this.router.get(`${this.path}`, this.getEmployee);
+    this.router.get(`${this.path}`,authorize(), this.getEmployee);
     this.router.get(`${this.path}/:id`, this.getEmployeeById);
     this.router.put(`${this.path}/:id`, this.updateEmployeeById);
     this.router.delete(`${this.path}/:id`, this.deleteEmployeeById);
@@ -23,6 +26,7 @@ class EmployeeController extends AbstractController {
       // this.asyncRouteHandler(this.createEmployee)
       this.createEmployee
     );
+    this.router.post(`${this.path}/login`, this.login );
   }
   private getEmployee = async (
     request: RequestWithUser,
@@ -106,8 +110,36 @@ class EmployeeController extends AbstractController {
       response.send(
         this.fmt.formatResponse(data, Date.now() - request.startTime, "OK")
       );
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public async getEmployeeByName(userName: string) {
+    const employeeRepo = getConnection().getRepository(Employee);
+    const employeeDetail = await employeeRepo.findOne({
+        where: { name: userName },
+    });
+    return employeeDetail;
+}
+
+  private login = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try{
+      const loginData = request.body;
+    const loginDetail = await this.employeeService.employeeLogin(
+      loginData.name,
+      loginData.password
+    );
+    response.send(
+      this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")
+    );
+    }
+    catch (error) {
+      next(error);
     }
   };
 }

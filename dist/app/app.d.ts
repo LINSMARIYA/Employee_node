@@ -8,6 +8,7 @@ declare class App extends EventEmitter {
     listen(): void;
     getServer(): express.Application;
     private initializeMiddlewares;
+    private initializaErrorHandling;
     private initializeControllers;
 }
 export default App;

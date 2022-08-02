@@ -1,13 +1,15 @@
 
 import { IsNumber, IsString, IsUUID } from "class-validator";
 
-export class CreateDepartmentDto {
+export class CreateEmployeeDto {
     @IsString()
     public name: string;
 
+    // @IsString()
+    // public username: string;
 
-    // @IsNumber()
-    // public experience: number;
+    @IsNumber()
+    public experience: number;
 
     @IsUUID()
     public departmentId: string;
