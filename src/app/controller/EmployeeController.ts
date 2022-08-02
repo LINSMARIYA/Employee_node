@@ -8,7 +8,9 @@ import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
 import { getConnection } from "typeorm";
 import { Employee } from "../entities/Employee";
 import authorize from "../middleware/authorize";
-
+import { GetEmployeeDto } from "../dto/GetEmployeeDto";
+import { UpdateEmployeeDto } from "../dto/UpdateEmployeeDto";
+import { DeleteEmployeeDto } from "../dto/DeleteEmployeeDto";
 
 class EmployeeController extends AbstractController {
   constructor(private employeeService: EmployeeService) {
@@ -16,10 +18,20 @@ class EmployeeController extends AbstractController {
     this.initializeRoutes();
   }
   protected initializeRoutes() {
-    this.router.get(`${this.path}`,authorize(), this.getEmployee);
-    this.router.get(`${this.path}/:id`, this.getEmployeeById);
-    this.router.put(`${this.path}/:id`, this.updateEmployeeById);
-    this.router.delete(`${this.path}/:id`, this.deleteEmployeeById);
+    this.router.get(`${this.path}`, /*authorize(),*/ this.getEmployee);
+
+    this.router.get(`${this.path}/:id`, 
+    validationMiddleware(GetEmployeeDto, APP_CONSTANTS.params),
+    this.getEmployeeById);
+
+    this.router.put(`${this.path}/:id`,
+    validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.params),
+    this.updateEmployeeById);
+
+    this.router.delete(`${this.path}/:id`, 
+    validationMiddleware(DeleteEmployeeDto, APP_CONSTANTS.params),
+    this.deleteEmployeeById);
+    
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
