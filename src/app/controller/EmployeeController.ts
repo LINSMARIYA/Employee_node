@@ -11,6 +11,7 @@ import authorize from "../middleware/authorize";
 import { GetEmployeeDto } from "../dto/GetEmployeeDto";
 import { UpdateEmployeeDto } from "../dto/UpdateEmployeeDto";
 import { DeleteEmployeeDto } from "../dto/DeleteEmployeeDto";
+import { UpdateEmployeeByIdDto } from "../dto/UpdateEmployeeByIdDto";
 
 class EmployeeController extends AbstractController {
   constructor(private employeeService: EmployeeService) {
@@ -25,13 +26,14 @@ class EmployeeController extends AbstractController {
     this.getEmployeeById);
 
     this.router.put(`${this.path}/:id`,
+    validationMiddleware(UpdateEmployeeByIdDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.params),
     this.updateEmployeeById);
 
     this.router.delete(`${this.path}/:id`, 
     validationMiddleware(DeleteEmployeeDto, APP_CONSTANTS.params),
     this.deleteEmployeeById);
-    
+
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
