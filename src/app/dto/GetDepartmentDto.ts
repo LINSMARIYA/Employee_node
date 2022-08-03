@@ -4,7 +4,7 @@ export class GetDepartmentDto {
 
 
     @IsUUID()
-    public departmentId: string;
+    public id: string;
 
 
 }

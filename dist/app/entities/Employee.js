@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Employee = void 0;
 const typeorm_1 = require("typeorm");
 const AbstractEntity_1 = require("./AbstractEntity");
+const Address_1 = require("./Address");
 const Department_1 = require("./Department");
 let Employee = class Employee extends AbstractEntity_1.AbstractEntity {
 };
@@ -42,7 +43,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
-], Employee.prototype, "doj", void 0);
+], Employee.prototype, "dateOfJoining", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false, default: "password" }),
     __metadata("design:type", String)
@@ -56,6 +57,15 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Employee.prototype, "departmentId", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => Address_1.Address, { cascade: true }),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", Address_1.Address)
+], Employee.prototype, "address", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Employee.prototype, "addressId", void 0);
 Employee = __decorate([
     (0, typeorm_1.Entity)("employee")
 ], Employee);

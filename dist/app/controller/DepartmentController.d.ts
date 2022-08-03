@@ -1,6 +1,6 @@
 import { AbstractController } from "../util/rest/controller";
 import { DepartmentService } from "../service/DepartmentService";
-declare class DepartmentController extends AbstractController {
+export declare class DepartmentController extends AbstractController {
     private departmentService;
     constructor(departmentService: DepartmentService);
     protected initializeRoutes(): void;

@@ -4,10 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpException_1 = __importDefault(require("./HttpException"));
-const errorCode_1 = require("../util/errorCode");
 class UserNotAuthorizedException extends HttpException_1.default {
-    constructor() {
-        super(403, errorCode_1.ErrorCodes.UNAUTHORIZED.MESSAGE, errorCode_1.ErrorCodes.UNAUTHORIZED.CODE);
+    constructor(error) {
+        super(403, error.MESSAGE, error.CODE);
     }
 }
 exports.default = UserNotAuthorizedException;

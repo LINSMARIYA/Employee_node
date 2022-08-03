@@ -22,7 +22,12 @@ class EmployeeRespository {
     getEmployeeById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
-            return employeeRepo.findOne(id);
+            return employeeRepo.findOne({
+                where: {
+                    id,
+                },
+                relations: ['address'],
+            });
         });
     }
     updateEmployeeDetails(employeeId, employeeDetails) {
@@ -40,7 +45,7 @@ class EmployeeRespository {
     softDeleteEmployeeById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
-            return employeeRepo.softDelete({
+            return employeeRepo.softRemove({
                 id,
             });
         });

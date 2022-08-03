@@ -1,4 +1,5 @@
 import { AbstractEntity } from "./AbstractEntity";
+import { Address } from "./Address";
 import { Department } from "./Department";
 export declare class Employee extends AbstractEntity {
     id: string;
@@ -7,8 +8,10 @@ export declare class Employee extends AbstractEntity {
     role: string;
     status: string;
     experience: string;
-    doj: string;
+    dateOfJoining: string;
     password: string;
     department: Department;
     departmentId: string;
+    address: Address;
+    addressId: string;
 }

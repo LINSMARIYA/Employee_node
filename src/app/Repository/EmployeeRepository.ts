@@ -10,7 +10,12 @@ export class EmployeeRespository {
 
   async getEmployeeById(id: string): Promise<Employee> {
     const employeeRepo = getConnection().getRepository(Employee);
-    return employeeRepo.findOne(id);
+    return employeeRepo.findOne({
+      where: {
+          id,
+      },
+      relations: ['address'],
+  });
   }
 
   public async updateEmployeeDetails(employeeId: string, employeeDetails: any) {
@@ -29,7 +34,7 @@ export class EmployeeRespository {
 
   public async softDeleteEmployeeById(id: string) {
     const employeeRepo = getConnection().getRepository(Employee);
-    return employeeRepo.softDelete({
+    return employeeRepo.softRemove({
       id,
     });
   }

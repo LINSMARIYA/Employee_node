@@ -6,13 +6,13 @@ exports.ErrorCodes = {
         CODE: "UNAUTHORIZED",
         MESSAGE: "User is not allowed to perform this operation",
     },
-    USER_NOT_FOUND: {
-        CODE: "USER_NOT_FOUND",
-        MESSAGE: "User not found",
+    EMPLOYEE_NOT_FOUND: {
+        CODE: "EMPLOYEE_NOT_FOUND",
+        MESSAGE: "Employee not found",
     },
-    USER_WITH_ID_NOT_FOUND: {
-        CODE: "USER_WITH_ID_NOT_FOUND",
-        MESSAGE: "User with given id not found",
+    EMPLOYEE_WITH_ID_NOT_FOUND: {
+        CODE: "EMPLOYEE_WITH_ID_NOT_FOUND",
+        MESSAGE: "Employee with given id not found",
     },
     DEPARTMENT_NOT_FOUND: {
         CODE: "DEPARTMENT_NOT_FOUND",

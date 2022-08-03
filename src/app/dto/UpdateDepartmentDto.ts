@@ -4,8 +4,5 @@ export class UpdateDepartmentDto {
     @IsString()
     public name: string;
 
-    // @IsUUID()
-    // public departmentId: string;
-
 
 }

@@ -12,8 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DepartmentController = void 0;
 const controller_1 = require("../util/rest/controller");
 const constants_1 = __importDefault(require("../constants"));
+const authorize_1 = __importDefault(require("../middleware/authorize"));
 const validationMiddleware_1 = __importDefault(require("../middleware/validationMiddleware"));
 const CreateDepartmentDto_1 = require("../dto/CreateDepartmentDto");
 const UpdateDepartmentDto_1 = require("../dto/UpdateDepartmentDto");
@@ -76,12 +78,13 @@ class DepartmentController extends controller_1.AbstractController {
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.get(`${this.path}`, this.getDepartment);
-        this.router.get(`${this.path}/:id`, (0, validationMiddleware_1.default)(GetDepartmentDto_1.GetDepartmentDto, constants_1.default.params), this.getDepartmentById);
-        this.router.put(`${this.path}/:id`, (0, validationMiddleware_1.default)(UpdateDepartmentByIdDto_1.UpdateDepartmentByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateDepartmentDto_1.UpdateDepartmentDto, constants_1.default.body), this.updateDepartmentById);
-        this.router.delete(`${this.path}/:id`, (0, validationMiddleware_1.default)(DeleteDepartmentDto_1.DeleteDepartmentDto, constants_1.default.params), this.deleteDepartmentById);
-        this.router.post(`${this.path}`, (0, validationMiddleware_1.default)(CreateDepartmentDto_1.CreateDepartmentDto, constants_1.default.body), this.createDepartment);
+        this.router.get(`${this.path}`, (0, authorize_1.default)(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]), this.getDepartment);
+        this.router.get(`${this.path}/:id`, (0, authorize_1.default)(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]), (0, validationMiddleware_1.default)(GetDepartmentDto_1.GetDepartmentDto, constants_1.default.params), this.getDepartmentById);
+        this.router.put(`${this.path}/:id`, (0, authorize_1.default)([constants_1.default.admin]), (0, validationMiddleware_1.default)(UpdateDepartmentByIdDto_1.UpdateDepartmentByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateDepartmentDto_1.UpdateDepartmentDto, constants_1.default.body), this.updateDepartmentById);
+        this.router.delete(`${this.path}/:id`, (0, authorize_1.default)([constants_1.default.admin]), (0, validationMiddleware_1.default)(DeleteDepartmentDto_1.DeleteDepartmentDto, constants_1.default.params), this.deleteDepartmentById);
+        this.router.post(`${this.path}`, (0, authorize_1.default)([constants_1.default.admin]), (0, validationMiddleware_1.default)(CreateDepartmentDto_1.CreateDepartmentDto, constants_1.default.body), this.createDepartment);
     }
 }
+exports.DepartmentController = DepartmentController;
 exports.default = DepartmentController;
 //# sourceMappingURL=DepartmentController.js.map

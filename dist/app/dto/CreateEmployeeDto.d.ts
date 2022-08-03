@@ -1,3 +1,4 @@
+import { CreateAddressDto } from "./CreateAddressDto";
 export declare class CreateEmployeeDto {
     name: string;
     username: string;
@@ -6,5 +7,6 @@ export declare class CreateEmployeeDto {
     password: string;
     role: string;
     status: string;
-    doj: string;
+    dateOfJoining: string;
+    address: CreateAddressDto;
 }

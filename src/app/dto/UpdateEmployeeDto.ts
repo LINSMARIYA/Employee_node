@@ -24,5 +24,5 @@ export class UpdateEmployeeDto {
     public status: string;
 
     @IsString()
-    public doj: string;
+    public dateOfJoining: string;
 }

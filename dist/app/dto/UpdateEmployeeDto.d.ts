@@ -6,5 +6,5 @@ export declare class UpdateEmployeeDto {
     password: string;
     role: string;
     status: string;
-    doj: string;
+    dateOfJoining: string;
 }

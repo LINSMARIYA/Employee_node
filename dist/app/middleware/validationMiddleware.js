@@ -6,17 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const HttpException_1 = __importDefault(require("../exception/HttpException"));
+const constants_1 = __importDefault(require("../constants"));
 const errorCode_1 = require("../util/errorCode");
 function validationMiddleware(type, parameter, skipMissingProperties = false) {
     return (req, res, next) => {
-        let requestBody;
-        console.log(req.params);
-        if (parameter === "body") {
-            requestBody = (0, class_transformer_1.plainToClass)(type, req.body);
+        let reqValidator;
+        switch (parameter) {
+            case constants_1.default.body:
+                reqValidator = req.body;
+                break;
+            case constants_1.default.params:
+                reqValidator = req.params;
+                break;
         }
-        else if (parameter === "params") {
-            requestBody = (0, class_transformer_1.plainToClass)(type, req.params);
-        }
+        const requestBody = (0, class_transformer_1.plainToClass)(type, reqValidator);
         (0, class_validator_1.validate)(requestBody, {
             skipMissingProperties,
             forbidUnknownValues: true,
@@ -27,8 +30,13 @@ function validationMiddleware(type, parameter, skipMissingProperties = false) {
                 next(new HttpException_1.default(400, errorDetail.MESSAGE, errorDetail.CODE, errors));
             }
             else {
-                if (parameter === "body") {
-                    req.body = requestBody;
+                switch (parameter) {
+                    case constants_1.default.body:
+                        req.body = requestBody;
+                        break;
+                    case constants_1.default.params:
+                        req.params = requestBody;
+                        break;
                 }
                 next();
             }

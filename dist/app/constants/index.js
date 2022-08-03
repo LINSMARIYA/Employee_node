@@ -8,6 +8,8 @@ const APP_CONSTANTS = {
     authorizationHeader: "Authorization",
     bearer: "Bearer",
     basePath: `http://localhost:${process.env.PORT}`,
+    admin: 'admin',
+    sde: 'sde',
     service: "employee-app"
 };
 exports.default = APP_CONSTANTS;

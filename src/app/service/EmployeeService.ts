@@ -8,6 +8,8 @@ import  jsonwebtoken  from "jsonwebtoken";
 import { CustomError, ErrorCodes } from "../util/errorCode";
 import UserNotAuthorizedException from "../exception/UserNotAuthorizedException";
 import IncorrectUsernameOrPasswordException from "../exception/IncorrectUsernameOrPasswordException";
+import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
+import { Address } from "../entities/Address";
 
 
 
@@ -17,53 +19,81 @@ export class EmployeeService {
     return await this.employeeRepo.getAllEmployees();
   }
 
-  async getEmployeeById(id: string) {
+  public async getEmployeeById(id: string) {
     const employee=await this.employeeRepo.getEmployeeById(id);
     if(!employee){
-      throw new EntityNotFoundException(ErrorCodes.USER_WITH_ID_NOT_FOUND);
+      throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);
   }
-    
+    return employee;
   }
 
-  public async createEmployee(employeeDetails: any) {
+  public async createEmployee(employeeDetails: CreateEmployeeDto): Promise<Employee> {
+    
     try {
+
+        const newAddress = plainToClass(Address,{    
+        line1: employeeDetails.address.line1,
+        line2: employeeDetails.address.line2,
+        city: employeeDetails.address.city,
+        state: employeeDetails.address.state,
+        country: employeeDetails.address.country,
+        pincode: employeeDetails.address.pincode
+
+      });
+
       const newEmployee = plainToClass(Employee, {
         name: employeeDetails.name,
         username: employeeDetails.username,
         // age: employeeDetails.age,
         status: employeeDetails.status,
         role:employeeDetails.role,
+        address: newAddress,
         departmentId: employeeDetails.departmentId,
-        doj:employeeDetails.doj,
+        dateOfJoining:employeeDetails.dateOfJoining,
         experience: employeeDetails.experience,
         password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password,10):'',
-        // isActive: true,
+        isActive: true,
       });
-      const save = await this.employeeRepo.saveEmployeeDetails(newEmployee);
+      const save: Employee = await this.employeeRepo.saveEmployeeDetails(newEmployee);
       return save;
     } catch (err) {
-      throw new HttpException(400, "Failed to create employee", "code-400");
+     throw new HttpException(400, "Failed to create employee", "code-400");
+    //  throw err;
     }
   }
 
   public async updateEmployeeById(id: string, employeeDetails: any) {
     try {
-      const updatedEmployee = plainToClass(Employee, {
+        await this.getEmployeeById(id);
+        
+        const newAddress = plainToClass(Address,{
+          id: employeeDetails.address.id,
+          line1: employeeDetails.address.line1,
+          line2: employeeDetails.address.line2,
+          city: employeeDetails.address.city,
+          state: employeeDetails.address.state,
+          country: employeeDetails.address.country,
+          pincode: employeeDetails.address.pincode
+        });
+
+        const updatedEmployee = plainToClass(Employee, {
         name: employeeDetails.name,
         departmentId: employeeDetails.departmentId,
         role:employeeDetails.role,
         status:employeeDetails.status,
         experience:employeeDetails.experience,
-        doj:employeeDetails.doj,
+        dateOfJoining:employeeDetails.dateOfJoining,
         username:employeeDetails.username,
+        address: newAddress,
         password:employeeDetails.password,
+        isActive: true,
       });
       const updated = await this.employeeRepo.updateEmployeeDetails(
         id,
         updatedEmployee
       );
       if(updated.affected===0)
-      throw new EntityNotFoundException(ErrorCodes.USER_NOT_FOUND);
+      throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_NOT_FOUND);
       else
       return updated;
     } catch (err) {
@@ -72,14 +102,19 @@ export class EmployeeService {
   }
 
   public async softDeleteEmployeeById(id: string) {
+    try{
+      await this.getEmployeeById(id);
     const update=await this.employeeRepo.softDeleteEmployeeById(id);
-    if(update.affected===0){
-      throw new EntityNotFoundException(ErrorCodes.USER_WITH_ID_NOT_FOUND);
-    //return employee;
-    
+    // if(update){
+    //   throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);  
+    // }
+  }
+    catch(err){
+      throw err;
+    }
   }
     
-  }
+  
   
   public employeeLogin = async (
     name: string,
@@ -90,7 +125,8 @@ export class EmployeeService {
     );
     if (!employeeDetails) {
      
-      throw new UserNotAuthorizedException();
+      // throw new UserNotAuthorizedException();
+      throw new EntityNotFoundException(ErrorCodes.EM)
     }
     const validPassword = await bcrypt.compare(password, employeeDetails.password);
     if (validPassword) {
@@ -98,7 +134,8 @@ export class EmployeeService {
       let payload = {
         "custom:id": employeeDetails.id,
         "custom:name": employeeDetails.username,
-        //"custom:role":employeeDetails.role,
+        //"custom:role": "admin",
+        "custom:role":employeeDetails.role,
       };
       const token = this.generateAuthTokens(payload);
 
@@ -107,11 +144,7 @@ export class EmployeeService {
         employeeDetails,
       };
     } else {
-      // console.log("Invalid");
-      // throw new IncorrectUsernameOrPasswordException({
-      //   "MESSAGE":"invalid password",
-      //   "CODE":"INCORRECT_USERNAME_AND_PASSWORD_ERROR"}
-      // );
+      console.log("Error");
       throw new IncorrectUsernameOrPasswordException(ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
     }
   };

@@ -1,34 +1,12 @@
 import { plainToClass } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
-import { Request } from "express";
 import * as express from "express";
 import HttpException from "../exception/HttpException";
 import APP_CONSTANTS from "../constants";
 import { ErrorCodes } from "../util/errorCode";
 
 
-/**
- * Middleware to validate the request.
- * Validations are performed using class validator
- */
-// function validationMiddleware<T>(type: any, parameter: string, skipMissingProperties = false): express.RequestHandler {
-//   return (req, res, next) => {
-//     const requestBody = plainToClass(type, req.body);
-//     validate(
-//       requestBody, { skipMissingProperties, forbidUnknownValues: true, whitelist: true })
-//       .then((errors: ValidationError[]) => {
-//         if (errors.length > 0) {
-//           const errorDetail = ErrorCodes.VALIDATION_ERROR;
-//           next(new HttpException(400, errorDetail.MESSAGE, errorDetail.CODE, errors));
-//         //   next(errors);
-//         } else {
-//             req.body = requestBody;
-//           next();
-//         }
-//       });
-//   };
-// }
-// export default validationMiddleware;
+
 
 function validationMiddleware<T>(
   type: any,
@@ -36,13 +14,15 @@ function validationMiddleware<T>(
   skipMissingProperties = false
 ): express.RequestHandler {
   return (req, res, next) => {
-    let requestBody: any;
-    console.log(req.params);
-    if (parameter === "body") {
-      requestBody = plainToClass(type, req.body);
-    } else if (parameter === "params") {
-      requestBody = plainToClass(type, req.params);
-    }
+    let reqValidator: any;
+    // console.log(req.params);
+    switch(parameter){
+      case APP_CONSTANTS.body : reqValidator = req.body;
+      break;
+      case APP_CONSTANTS.params: reqValidator = req.params;
+      break;
+  }
+  const requestBody: any = plainToClass(type, reqValidator);
     validate(requestBody, {
       skipMissingProperties,
       forbidUnknownValues: true,
@@ -55,8 +35,11 @@ function validationMiddleware<T>(
         );
         //next(errors);
       } else {
-        if (parameter === "body") {
-          req.body = requestBody;
+        switch(parameter){
+          case APP_CONSTANTS.body : req.body = requestBody;
+          break;
+          case APP_CONSTANTS.params: req.params = requestBody;
+          break;
         }
         next();
       }

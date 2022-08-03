@@ -44,6 +44,6 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateEmployeeDto.prototype, "doj", void 0);
+], UpdateEmployeeDto.prototype, "dateOfJoining", void 0);
 exports.UpdateEmployeeDto = UpdateEmployeeDto;
 //# sourceMappingURL=UpdateEmployeeDto.js.map

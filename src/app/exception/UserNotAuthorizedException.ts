@@ -6,8 +6,8 @@ import { CustomError, ErrorCodes } from "../util/errorCode";
  */
 class UserNotAuthorizedException extends HttpException {
 
-  constructor() {
-    super(403, ErrorCodes.UNAUTHORIZED.MESSAGE, ErrorCodes.UNAUTHORIZED.CODE);
+  constructor(error:CustomError) {
+    super(403, error.MESSAGE, error.CODE);
   }
 }
 
