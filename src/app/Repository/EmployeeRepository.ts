@@ -37,10 +37,10 @@ export class EmployeeRespository {
     const employeeRepo = getConnection().getRepository(Employee);
     return employeeRepo.save(employeeDetails);
   }
-  public async getEmployeeByName(userName: string) {
+  public async getEmployeeByUserName(userName: string) {
     const employeeRepo = getConnection().getRepository(Employee);
     const employeeDetail = await employeeRepo.findOne({
-        where: { name: userName },
+        where: { username: userName },
     });
     return employeeDetail;
 }

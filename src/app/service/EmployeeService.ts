@@ -70,10 +70,11 @@ export class EmployeeService {
     name: string,
     password: string
   ) => {
-    const employeeDetails = await this.employeeRepo.getEmployeeByName(
+    const employeeDetails = await this.employeeRepo.getEmployeeByUserName(
       name
     );
     if (!employeeDetails) {
+     
       throw new UserNotAuthorizedException();
     }
     const validPassword = await bcrypt.compare(password, employeeDetails.password);
@@ -81,8 +82,8 @@ export class EmployeeService {
 
       let payload = {
         "custom:id": employeeDetails.id,
-        "custom:name": employeeDetails.name,
-        "custom:role":employeeDetails.role,
+        "custom:name": employeeDetails.username,
+        //"custom:role":employeeDetails.role,
       };
       const token = this.generateAuthTokens(payload);
 

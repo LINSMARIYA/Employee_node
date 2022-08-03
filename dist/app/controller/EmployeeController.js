@@ -80,7 +80,7 @@ class EmployeeController extends controller_1.AbstractController {
             try {
                 console.log(request.body);
                 const loginData = request.body;
-                const loginDetail = yield this.employeeService.employeeLogin(loginData.name, loginData.password);
+                const loginDetail = yield this.employeeService.employeeLogin(loginData.username, loginData.password);
                 response.send(this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK"));
             }
             catch (error) {
@@ -97,7 +97,7 @@ class EmployeeController extends controller_1.AbstractController {
         this.router.post(`${this.path}`, (0, validationMiddleware_1.default)(CreateEmployeeDto_1.CreateEmployeeDto, constants_1.default.body), this.createEmployee);
         this.router.post(`${this.path}/login`, this.login);
     }
-    getEmployeeByName(userName) {
+    getEmployeeByUserName(userName) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
             const employeeDetail = yield employeeRepo.findOne({

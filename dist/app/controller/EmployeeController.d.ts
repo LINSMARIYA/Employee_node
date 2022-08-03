@@ -10,7 +10,7 @@ declare class EmployeeController extends AbstractController {
     private updateEmployeeById;
     private deleteEmployeeById;
     private createEmployee;
-    getEmployeeByName(userName: string): Promise<Employee>;
+    getEmployeeByUserName(userName: string): Promise<Employee>;
     private login;
 }
 export default EmployeeController;

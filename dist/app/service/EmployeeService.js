@@ -26,7 +26,7 @@ class EmployeeService {
     constructor(employeeRepo) {
         this.employeeRepo = employeeRepo;
         this.employeeLogin = (name, password) => __awaiter(this, void 0, void 0, function* () {
-            const employeeDetails = yield this.employeeRepo.getEmployeeByName(name);
+            const employeeDetails = yield this.employeeRepo.getEmployeeByUserName(name);
             if (!employeeDetails) {
                 throw new UserNotAuthorizedException_1.default();
             }
@@ -34,8 +34,7 @@ class EmployeeService {
             if (validPassword) {
                 let payload = {
                     "custom:id": employeeDetails.id,
-                    "custom:name": employeeDetails.name,
-                    "custom:role": employeeDetails.role,
+                    "custom:name": employeeDetails.username,
                 };
                 const token = this.generateAuthTokens(payload);
                 return {

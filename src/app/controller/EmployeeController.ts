@@ -129,7 +129,7 @@ class EmployeeController extends AbstractController {
     }
   };
 
-  public async getEmployeeByName(userName: string) {
+  public async getEmployeeByUserName(userName: string) {
     const employeeRepo = getConnection().getRepository(Employee);
     const employeeDetail = await employeeRepo.findOne({
         where: { name: userName },
@@ -146,7 +146,7 @@ class EmployeeController extends AbstractController {
       console.log(request.body);
       const loginData = request.body;
     const loginDetail = await this.employeeService.employeeLogin(
-      loginData.name,
+      loginData.username,
       loginData.password
       
     );
