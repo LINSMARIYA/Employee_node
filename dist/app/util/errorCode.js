@@ -14,6 +14,14 @@ exports.ErrorCodes = {
         CODE: "USER_WITH_ID_NOT_FOUND",
         MESSAGE: "User with given id not found",
     },
+    DEPARTMENT_NOT_FOUND: {
+        CODE: "DEPARTMENT_NOT_FOUND",
+        MESSAGE: "Department  not found",
+    },
+    DEPARTMENT_WITH_ID_NOT_FOUND: {
+        CODE: "DEPARTMENT_WITH_ID_NOT_FOUND",
+        MESSAGE: "Department with given id not found",
+    },
     VALIDATION_ERROR: {
         CODE: "VALIDATION_ERROR",
         MESSAGE: "Validation failed error",

@@ -18,6 +18,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateEmployeeDto.prototype, "name", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateEmployeeDto.prototype, "username", void 0);
+__decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateEmployeeDto.prototype, "experience", void 0);

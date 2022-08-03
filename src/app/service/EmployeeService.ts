@@ -20,7 +20,7 @@ export class EmployeeService {
   async getEmployeeById(id: string) {
     const employee=await this.employeeRepo.getEmployeeById(id);
     if(!employee){
-      throw new EntityNotFoundException(ErrorCodes.USER_WITH_ID_NOT_FOUND)
+      throw new EntityNotFoundException(ErrorCodes.USER_WITH_ID_NOT_FOUND);
   }
     
   }
@@ -29,7 +29,7 @@ export class EmployeeService {
     try {
       const newEmployee = plainToClass(Employee, {
         name: employeeDetails.name,
-        // username: employeeDetails.username,
+        username: employeeDetails.username,
         // age: employeeDetails.age,
         status: employeeDetails.status,
         role:employeeDetails.role,
@@ -78,6 +78,7 @@ export class EmployeeService {
     }
     const validPassword = await bcrypt.compare(password, employeeDetails.password);
     if (validPassword) {
+
       let payload = {
         "custom:id": employeeDetails.id,
         "custom:name": employeeDetails.name,
@@ -90,7 +91,12 @@ export class EmployeeService {
         employeeDetails,
       };
     } else {
-      throw new IncorrectUsernameOrPasswordException();
+      // console.log("Invalid");
+      // throw new IncorrectUsernameOrPasswordException({
+      //   "MESSAGE":"invalid password",
+      //   "CODE":"INCORRECT_USERNAME_AND_PASSWORD_ERROR"}
+      // );
+      throw new IncorrectUsernameOrPasswordException(ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
     }
   };
 

@@ -18,7 +18,10 @@ const validationMiddleware_1 = __importDefault(require("../middleware/validation
 const CreateEmployeeDto_1 = require("../dto/CreateEmployeeDto");
 const typeorm_1 = require("typeorm");
 const Employee_1 = require("../entities/Employee");
-const authorize_1 = __importDefault(require("../middleware/authorize"));
+const GetEmployeeDto_1 = require("../dto/GetEmployeeDto");
+const UpdateEmployeeDto_1 = require("../dto/UpdateEmployeeDto");
+const DeleteEmployeeDto_1 = require("../dto/DeleteEmployeeDto");
+const UpdateEmployeeByIdDto_1 = require("../dto/UpdateEmployeeByIdDto");
 class EmployeeController extends controller_1.AbstractController {
     constructor(employeeService) {
         super(`${constants_1.default.apiPrefix}/employee`);
@@ -75,6 +78,7 @@ class EmployeeController extends controller_1.AbstractController {
         });
         this.login = (request, response, next) => __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(request.body);
                 const loginData = request.body;
                 const loginDetail = yield this.employeeService.employeeLogin(loginData.name, loginData.password);
                 response.send(this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK"));
@@ -86,10 +90,10 @@ class EmployeeController extends controller_1.AbstractController {
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.get(`${this.path}`, (0, authorize_1.default)(), this.getEmployee);
-        this.router.get(`${this.path}/:id`, this.getEmployeeById);
-        this.router.put(`${this.path}/:id`, this.updateEmployeeById);
-        this.router.delete(`${this.path}/:id`, this.deleteEmployeeById);
+        this.router.get(`${this.path}`, this.getEmployee);
+        this.router.get(`${this.path}/:id`, (0, validationMiddleware_1.default)(GetEmployeeDto_1.GetEmployeeDto, constants_1.default.params), this.getEmployeeById);
+        this.router.put(`${this.path}/:id`, (0, validationMiddleware_1.default)(UpdateEmployeeByIdDto_1.UpdateEmployeeByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateEmployeeDto_1.UpdateEmployeeDto, constants_1.default.params), this.updateEmployeeById);
+        this.router.delete(`${this.path}/:id`, (0, validationMiddleware_1.default)(DeleteEmployeeDto_1.DeleteEmployeeDto, constants_1.default.params), this.deleteEmployeeById);
         this.router.post(`${this.path}`, (0, validationMiddleware_1.default)(CreateEmployeeDto_1.CreateEmployeeDto, constants_1.default.body), this.createEmployee);
         this.router.post(`${this.path}/login`, this.login);
     }

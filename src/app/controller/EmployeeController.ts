@@ -143,10 +143,12 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     try{
+      console.log(request.body);
       const loginData = request.body;
     const loginDetail = await this.employeeService.employeeLogin(
       loginData.name,
       loginData.password
+      
     );
     response.send(
       this.fmt.formatResponse(loginDetail, Date.now() - request.startTime, "OK")

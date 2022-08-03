@@ -54,7 +54,7 @@ class DepartmentService {
                 return save;
             }
             catch (err) {
-                throw new HttpException_1.default(400, "Failed to create department", "code-400");
+                throw new HttpException_1.default(400, "Failed to update department", "code-400");
             }
         });
     }

@@ -1,5 +1,6 @@
 export declare class CreateEmployeeDto {
     name: string;
+    username: string;
     experience: number;
     departmentId: string;
     password: string;

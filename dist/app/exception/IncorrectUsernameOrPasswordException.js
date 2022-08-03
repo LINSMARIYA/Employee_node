@@ -4,10 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const HttpException_1 = __importDefault(require("./HttpException"));
-const errorCode_1 = require("../util/errorCode");
 class IncorrectUsernameOrPasswordException extends HttpException_1.default {
-    constructor() {
-        super(401, errorCode_1.ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR.MESSAGE, errorCode_1.ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR.CODE);
+    constructor(error) {
+        super(401, error.MESSAGE, error.CODE);
     }
 }
 exports.default = IncorrectUsernameOrPasswordException;

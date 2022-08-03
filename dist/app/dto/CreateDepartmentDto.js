@@ -17,9 +17,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateDepartmentDto.prototype, "name", void 0);
-__decorate([
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], CreateDepartmentDto.prototype, "departmentId", void 0);
 exports.CreateDepartmentDto = CreateDepartmentDto;
 //# sourceMappingURL=CreateDepartmentDto.js.map

@@ -9,21 +9,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateEmployeeDto = void 0;
+exports.UpdateEmployeeDto = void 0;
 const class_validator_1 = require("class-validator");
-class CreateEmployeeDto {
+class UpdateEmployeeDto {
 }
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "name", void 0);
+], UpdateEmployeeDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateEmployeeDto.prototype, "username", void 0);
 __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], CreateEmployeeDto.prototype, "experience", void 0);
+], UpdateEmployeeDto.prototype, "experience", void 0);
 __decorate([
     (0, class_validator_1.IsUUID)(),
     __metadata("design:type", String)
-], CreateEmployeeDto.prototype, "departmentId", void 0);
-exports.CreateEmployeeDto = CreateEmployeeDto;
+], UpdateEmployeeDto.prototype, "departmentId", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateEmployeeDto.prototype, "password", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateEmployeeDto.prototype, "role", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateEmployeeDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateEmployeeDto.prototype, "doj", void 0);
+exports.UpdateEmployeeDto = UpdateEmployeeDto;
 //# sourceMappingURL=UpdateEmployeeDto.js.map

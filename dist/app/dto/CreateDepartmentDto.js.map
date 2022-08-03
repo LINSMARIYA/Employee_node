@@ -1,1 +1,1 @@
-{"version":3,"file":"CreateDepartmentDto.js","sourceRoot":"","sources":["../../../src/app/dto/CreateDepartmentDto.ts"],"names":[],"mappings":";;;;;;;;;;;;AACA,qDAA6D;AAE7D,MAAa,mBAAmB;CAU/B;AARG;IADC,IAAA,0BAAQ,GAAE;;iDACS;AAOpB;IADC,IAAA,wBAAM,GAAE;;yDACmB;AAThC,kDAUC"}
+{"version":3,"file":"CreateDepartmentDto.js","sourceRoot":"","sources":["../../../src/app/dto/CreateDepartmentDto.ts"],"names":[],"mappings":";;;;;;;;;;;;AACA,qDAA6D;AAE7D,MAAa,mBAAmB;CAK/B;AAHG;IADC,IAAA,0BAAQ,GAAE;;iDACS;AAFxB,kDAKC"}

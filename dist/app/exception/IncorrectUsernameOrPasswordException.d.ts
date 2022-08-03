@@ -1,5 +1,6 @@
 import HttpException from "./HttpException";
+import { CustomError } from "../util/errorCode";
 declare class IncorrectUsernameOrPasswordException extends HttpException {
-    constructor();
+    constructor(error: CustomError);
 }
 export default IncorrectUsernameOrPasswordException;

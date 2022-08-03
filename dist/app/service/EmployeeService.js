@@ -44,7 +44,7 @@ class EmployeeService {
                 };
             }
             else {
-                throw new IncorrectUsernameOrPasswordException_1.default();
+                throw new IncorrectUsernameOrPasswordException_1.default(errorCode_1.ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
             }
         });
         this.generateAuthTokens = (payload) => {
@@ -71,6 +71,7 @@ class EmployeeService {
             try {
                 const newEmployee = (0, class_transformer_1.plainToClass)(Employee_1.Employee, {
                     name: employeeDetails.name,
+                    username: employeeDetails.username,
                     status: employeeDetails.status,
                     role: employeeDetails.role,
                     departmentId: employeeDetails.departmentId,

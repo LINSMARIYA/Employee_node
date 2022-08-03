@@ -18,6 +18,7 @@ export class DepartmentService {
     try {
       const newDepartment = plainToClass(Department, {
         name: departmentDetails.name,
+
       });
       const save = await this.departmentRepo.saveDepartmentDetails(
         newDepartment
@@ -39,7 +40,7 @@ export class DepartmentService {
       );
       return save;
     } catch (err) {
-      throw new HttpException(400, "Failed to create department", "code-400");
+      throw new HttpException(400, "Failed to update department", "code-400");
     }
   }
 

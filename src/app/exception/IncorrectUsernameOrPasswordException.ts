@@ -6,8 +6,8 @@ import { CustomError, ErrorCodes } from "../util/errorCode";
  */
 class IncorrectUsernameOrPasswordException extends HttpException {
 
-  constructor() {
-    super(401, ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR.MESSAGE, ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR.CODE);
+  constructor(error: CustomError) {
+    super(401, error.MESSAGE, error.CODE);
   }
 }
 
