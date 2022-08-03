@@ -92,18 +92,30 @@ class EmployeeService {
                 const updatedEmployee = (0, class_transformer_1.plainToClass)(Employee_1.Employee, {
                     name: employeeDetails.name,
                     departmentId: employeeDetails.departmentId,
+                    role: employeeDetails.role,
+                    status: employeeDetails.status,
+                    experience: employeeDetails.experience,
+                    doj: employeeDetails.doj,
+                    username: employeeDetails.username,
+                    password: employeeDetails.password,
                 });
-                const save = yield this.employeeRepo.updateEmployeeDetails(id, updatedEmployee);
-                return save;
+                const updated = yield this.employeeRepo.updateEmployeeDetails(id, updatedEmployee);
+                if (updated.affected === 0)
+                    throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.USER_NOT_FOUND);
+                else
+                    return updated;
             }
             catch (err) {
-                throw new HttpException_1.default(400, "Failed to create employee", "code-400");
+                throw new HttpException_1.default(400, "Failed to update employee", "code-400");
             }
         });
     }
     softDeleteEmployeeById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.employeeRepo.softDeleteEmployeeById(id);
+            const update = yield this.employeeRepo.softDeleteEmployeeById(id);
+            if (update.affected === 0) {
+                throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.USER_WITH_ID_NOT_FOUND);
+            }
         });
     }
 }

@@ -6,7 +6,4 @@ export class DeleteEmployeeDto {
     @IsUUID()
     public id: string;
 
-    
-
-
 }

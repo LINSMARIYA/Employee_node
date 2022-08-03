@@ -92,7 +92,7 @@ class EmployeeController extends controller_1.AbstractController {
     initializeRoutes() {
         this.router.get(`${this.path}`, this.getEmployee);
         this.router.get(`${this.path}/:id`, (0, validationMiddleware_1.default)(GetEmployeeDto_1.GetEmployeeDto, constants_1.default.params), this.getEmployeeById);
-        this.router.put(`${this.path}/:id`, (0, validationMiddleware_1.default)(UpdateEmployeeByIdDto_1.UpdateEmployeeByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateEmployeeDto_1.UpdateEmployeeDto, constants_1.default.params), this.updateEmployeeById);
+        this.router.put(`${this.path}/:id`, (0, validationMiddleware_1.default)(UpdateEmployeeByIdDto_1.UpdateEmployeeByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateEmployeeDto_1.UpdateEmployeeDto, constants_1.default.body), this.updateEmployeeById);
         this.router.delete(`${this.path}/:id`, (0, validationMiddleware_1.default)(DeleteEmployeeDto_1.DeleteEmployeeDto, constants_1.default.params), this.deleteEmployeeById);
         this.router.post(`${this.path}`, (0, validationMiddleware_1.default)(CreateEmployeeDto_1.CreateEmployeeDto, constants_1.default.body), this.createEmployee);
         this.router.post(`${this.path}/login`, this.login);

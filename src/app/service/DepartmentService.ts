@@ -1,7 +1,9 @@
 import { plainToClass } from "class-transformer";
 import { Department } from "../entities/Department";
+import EntityNotFoundException from "../exception/EntityNotFoundException";
 import HttpException from "../exception/HttpException";
 import { DepartmentRespository } from "../Repository/DepartmentRepository";
+import { ErrorCodes } from "../util/errorCode";
 
 
 export class DepartmentService {
@@ -23,6 +25,7 @@ export class DepartmentService {
       const save = await this.departmentRepo.saveDepartmentDetails(
         newDepartment
       );
+      
       return save;
     } catch (err) {
       throw new HttpException(400, "Failed to create department", "code-400");
@@ -38,6 +41,9 @@ export class DepartmentService {
         id,
         updatedDepartment
       );
+      if(save.affected===0)
+      throw new EntityNotFoundException(ErrorCodes.DEPARTMENT_WITH_ID_NOT_FOUND);
+      else
       return save;
     } catch (err) {
       throw new HttpException(400, "Failed to update department", "code-400");
@@ -45,6 +51,9 @@ export class DepartmentService {
   }
 
   public async softDeleteDepartmentById(id: string) {
-    return await this.departmentRepo.softDeleteDepartmentById(id);
+    const deleted= await this.departmentRepo.softDeleteDepartmentById(id);
+    if(deleted.affected===0)
+      throw new EntityNotFoundException(ErrorCodes.DEPARTMENT_WITH_ID_NOT_FOUND);
+
   }
 }

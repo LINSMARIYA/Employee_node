@@ -27,7 +27,7 @@ class EmployeeController extends AbstractController {
 
     this.router.put(`${this.path}/:id`,
     validationMiddleware(UpdateEmployeeByIdDto, APP_CONSTANTS.params),
-    validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.params),
+    validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     this.updateEmployeeById);
 
     this.router.delete(`${this.path}/:id`, 

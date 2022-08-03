@@ -78,7 +78,7 @@ class DepartmentController extends controller_1.AbstractController {
     initializeRoutes() {
         this.router.get(`${this.path}`, this.getDepartment);
         this.router.get(`${this.path}/:id`, (0, validationMiddleware_1.default)(GetDepartmentDto_1.GetDepartmentDto, constants_1.default.params), this.getDepartmentById);
-        this.router.put(`${this.path}/:id`, (0, validationMiddleware_1.default)(UpdateDepartmentByIdDto_1.UpdateDepartmentByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateDepartmentDto_1.UpdateDepartmentDto, constants_1.default.params), this.updateDepartmentById);
+        this.router.put(`${this.path}/:id`, (0, validationMiddleware_1.default)(UpdateDepartmentByIdDto_1.UpdateDepartmentByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateDepartmentDto_1.UpdateDepartmentDto, constants_1.default.body), this.updateDepartmentById);
         this.router.delete(`${this.path}/:id`, (0, validationMiddleware_1.default)(DeleteDepartmentDto_1.DeleteDepartmentDto, constants_1.default.params), this.deleteDepartmentById);
         this.router.post(`${this.path}`, (0, validationMiddleware_1.default)(CreateDepartmentDto_1.CreateDepartmentDto, constants_1.default.body), this.createDepartment);
     }

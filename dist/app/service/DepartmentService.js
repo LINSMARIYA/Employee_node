@@ -15,7 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepartmentService = void 0;
 const class_transformer_1 = require("class-transformer");
 const Department_1 = require("../entities/Department");
+const EntityNotFoundException_1 = __importDefault(require("../exception/EntityNotFoundException"));
 const HttpException_1 = __importDefault(require("../exception/HttpException"));
+const errorCode_1 = require("../util/errorCode");
 class DepartmentService {
     constructor(departmentRepo) {
         this.departmentRepo = departmentRepo;
@@ -51,7 +53,10 @@ class DepartmentService {
                     name: departmentDetails.name,
                 });
                 const save = yield this.departmentRepo.updateDepartmentDetails(id, updatedDepartment);
-                return save;
+                if (save.affected === 0)
+                    throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.DEPARTMENT_WITH_ID_NOT_FOUND);
+                else
+                    return save;
             }
             catch (err) {
                 throw new HttpException_1.default(400, "Failed to update department", "code-400");
@@ -60,7 +65,9 @@ class DepartmentService {
     }
     softDeleteDepartmentById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.departmentRepo.softDeleteDepartmentById(id);
+            const deleted = yield this.departmentRepo.softDeleteDepartmentById(id);
+            if (deleted.affected === 0)
+                throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.DEPARTMENT_WITH_ID_NOT_FOUND);
         });
     }
 }

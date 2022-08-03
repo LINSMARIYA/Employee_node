@@ -5,7 +5,7 @@ export class UpdateDepartmentByIdDto{
     // public name: string;
 
     @IsUUID()
-    public departmentId: string;
+    public id: string;
 
 
 }

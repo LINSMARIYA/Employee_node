@@ -51,19 +51,34 @@ export class EmployeeService {
       const updatedEmployee = plainToClass(Employee, {
         name: employeeDetails.name,
         departmentId: employeeDetails.departmentId,
+        role:employeeDetails.role,
+        status:employeeDetails.status,
+        experience:employeeDetails.experience,
+        doj:employeeDetails.doj,
+        username:employeeDetails.username,
+        password:employeeDetails.password,
       });
-      const save = await this.employeeRepo.updateEmployeeDetails(
+      const updated = await this.employeeRepo.updateEmployeeDetails(
         id,
         updatedEmployee
       );
-      return save;
+      if(updated.affected===0)
+      throw new EntityNotFoundException(ErrorCodes.USER_NOT_FOUND);
+      else
+      return updated;
     } catch (err) {
-      throw new HttpException(400, "Failed to create employee", "code-400");
+      throw new HttpException(400, "Failed to update employee", "code-400");
     }
   }
 
   public async softDeleteEmployeeById(id: string) {
-    return await this.employeeRepo.softDeleteEmployeeById(id);
+    const update=await this.employeeRepo.softDeleteEmployeeById(id);
+    if(update.affected===0){
+      throw new EntityNotFoundException(ErrorCodes.USER_WITH_ID_NOT_FOUND);
+    //return employee;
+    
+  }
+    
   }
   
   public employeeLogin = async (

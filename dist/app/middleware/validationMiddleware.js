@@ -10,6 +10,7 @@ const errorCode_1 = require("../util/errorCode");
 function validationMiddleware(type, parameter, skipMissingProperties = false) {
     return (req, res, next) => {
         let requestBody;
+        console.log(req.params);
         if (parameter === "body") {
             requestBody = (0, class_transformer_1.plainToClass)(type, req.body);
         }

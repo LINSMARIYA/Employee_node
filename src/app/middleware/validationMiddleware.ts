@@ -37,6 +37,7 @@ function validationMiddleware<T>(
 ): express.RequestHandler {
   return (req, res, next) => {
     let requestBody: any;
+    console.log(req.params);
     if (parameter === "body") {
       requestBody = plainToClass(type, req.body);
     } else if (parameter === "params") {
