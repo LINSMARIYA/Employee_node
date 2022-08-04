@@ -32,20 +32,20 @@ export class EmployeeRespository {
     return updateEmployeeDetails;
   }
 
-  public async softDeleteEmployeeById(id: string) {
+  public async softDeleteEmployeeById(employee:Employee) {
     const employeeRepo = getConnection().getRepository(Employee);
-    return employeeRepo.softRemove({
-      id,
-    });
+    return employeeRepo.softRemove(
+      employee
+    );
   }
   public async saveEmployeeDetails(employeeDetails: Employee) {
     const employeeRepo = getConnection().getRepository(Employee);
     return employeeRepo.save(employeeDetails);
   }
-  public async getEmployeeByUserName(userName: string) {
+  public async getEmployeeByUserName(username: string) {
     const employeeRepo = getConnection().getRepository(Employee);
     const employeeDetail = await employeeRepo.findOne({
-        where: { username: userName },
+        where: { username: username },
     });
     return employeeDetail;
 }

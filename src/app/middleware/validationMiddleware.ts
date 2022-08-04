@@ -32,8 +32,9 @@ function validationMiddleware<T>(
         const errorDetail = ErrorCodes.VALIDATION_ERROR;
         next(
           new HttpException(400, errorDetail.MESSAGE, errorDetail.CODE, errors)
+          //next(errors);
         );
-        //next(errors);
+        //
       } else {
         switch(parameter){
           case APP_CONSTANTS.body : req.body = requestBody;

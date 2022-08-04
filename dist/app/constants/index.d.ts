@@ -6,8 +6,13 @@ declare const APP_CONSTANTS: {
     authorizationHeader: string;
     bearer: string;
     basePath: string;
-    admin: string;
-    sde: string;
     service: string;
+};
+export declare const USER_ROLES: {
+    admin: string;
+    developer: string;
+    manager: string;
+    engineer: string;
+    guest: string;
 };
 export default APP_CONSTANTS;

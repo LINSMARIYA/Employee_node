@@ -1,7 +1,7 @@
 import { AbstractController } from "../util/rest/controller";
 import { NextFunction, Response } from "express";
 import RequestWithUser from "../util/rest/request";
-import APP_CONSTANTS from "../constants";
+import APP_CONSTANTS, { USER_ROLES } from "../constants";
 import authorize from "../middleware/authorize";
 import { DepartmentService } from "../service/DepartmentService";
 import validationMiddleware from "../middleware/validationMiddleware";
@@ -18,19 +18,20 @@ export class DepartmentController extends AbstractController {
   }
   protected initializeRoutes() {
     this.router.get(`${this.path}`, 
-    authorize(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]),
+    authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
     this.getDepartment);
 
     this.router.get(
       `${this.path}/:id`,
-      authorize(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]),
+      authorize([USER_ROLES.admin, USER_ROLES.manager]),
       validationMiddleware(GetDepartmentDto, APP_CONSTANTS.params),
       this.getDepartmentById
     );
 
     this.router.put(
       `${this.path}/:id`,
-      authorize([APP_CONSTANTS.admin]),
+      authorize([USER_ROLES.admin]),
+      //authorize([APP_CONSTANTS.admin]),
       validationMiddleware(UpdateDepartmentByIdDto, APP_CONSTANTS.params),
       validationMiddleware(UpdateDepartmentDto, APP_CONSTANTS.body),
       this.updateDepartmentById
@@ -38,14 +39,16 @@ export class DepartmentController extends AbstractController {
 
     this.router.delete(
       `${this.path}/:id`,
-      authorize([APP_CONSTANTS.admin]),
+      //authorize([APP_CONSTANTS.admin]),
+      authorize([USER_ROLES.admin]),
       validationMiddleware(DeleteDepartmentDto, APP_CONSTANTS.params),
       this.deleteDepartmentById
     );
 
     this.router.post(
       `${this.path}`,
-      authorize([APP_CONSTANTS.admin]),
+      authorize([USER_ROLES.admin]),
+      //authorize([APP_CONSTANTS.admin]),
       validationMiddleware(CreateDepartmentDto, APP_CONSTANTS.body),
       // this.asyncRouteHandler(this.createDepartment)
       this.createDepartment

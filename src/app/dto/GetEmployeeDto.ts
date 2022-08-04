@@ -4,7 +4,7 @@ export class GetEmployeeDto {
 
 
     @IsUUID()
-    public employeeId: string;
+    public id: string;
     
 
 }

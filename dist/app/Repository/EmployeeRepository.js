@@ -42,12 +42,10 @@ class EmployeeRespository {
             return updateEmployeeDetails;
         });
     }
-    softDeleteEmployeeById(id) {
+    softDeleteEmployeeById(employee) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
-            return employeeRepo.softRemove({
-                id,
-            });
+            return employeeRepo.softRemove(employee);
         });
     }
     saveEmployeeDetails(employeeDetails) {
@@ -56,11 +54,11 @@ class EmployeeRespository {
             return employeeRepo.save(employeeDetails);
         });
     }
-    getEmployeeByUserName(userName) {
+    getEmployeeByUserName(username) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
             const employeeDetail = yield employeeRepo.findOne({
-                where: { username: userName },
+                where: { username: username },
             });
             return employeeDetail;
         });

@@ -28,13 +28,13 @@ class EmployeeService {
         this.employeeLogin = (name, password) => __awaiter(this, void 0, void 0, function* () {
             const employeeDetails = yield this.employeeRepo.getEmployeeByUserName(name);
             if (!employeeDetails) {
-                throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.EM);
+                throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
             }
             const validPassword = yield bcrypt_1.default.compare(password, employeeDetails.password);
             if (validPassword) {
                 let payload = {
                     "custom:id": employeeDetails.id,
-                    "custom:name": employeeDetails.username,
+                    "custom:name": employeeDetails.name,
                     "custom:role": employeeDetails.role,
                 };
                 const token = this.generateAuthTokens(payload);
@@ -44,7 +44,6 @@ class EmployeeService {
                 };
             }
             else {
-                console.log("Error");
                 throw new IncorrectUsernameOrPasswordException_1.default(errorCode_1.ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
             }
         });
@@ -138,8 +137,11 @@ class EmployeeService {
     softDeleteEmployeeById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.getEmployeeById(id);
-                const update = yield this.employeeRepo.softDeleteEmployeeById(id);
+                const employee = yield this.employeeRepo.getEmployeeById(id);
+                const update = yield this.employeeRepo.softDeleteEmployeeById(employee);
+                if (update) {
+                    throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);
+                }
             }
             catch (err) {
                 throw err;

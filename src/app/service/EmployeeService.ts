@@ -103,11 +103,11 @@ export class EmployeeService {
 
   public async softDeleteEmployeeById(id: string) {
     try{
-      await this.getEmployeeById(id);
-    const update=await this.employeeRepo.softDeleteEmployeeById(id);
-    // if(update){
-    //   throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);  
-    // }
+      const employee=await this.employeeRepo.getEmployeeById(id)
+      const update=await this.employeeRepo.softDeleteEmployeeById(employee);
+      if(update){
+       throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);  
+     }
   }
     catch(err){
       throw err;
@@ -120,20 +120,22 @@ export class EmployeeService {
     name: string,
     password: string
   ) => {
+    
     const employeeDetails = await this.employeeRepo.getEmployeeByUserName(
       name
     );
+    
     if (!employeeDetails) {
-     
+      
       // throw new UserNotAuthorizedException();
-      throw new EntityNotFoundException(ErrorCodes.EM)
+      throw new EntityNotFoundException(ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
     }
     const validPassword = await bcrypt.compare(password, employeeDetails.password);
     if (validPassword) {
 
       let payload = {
         "custom:id": employeeDetails.id,
-        "custom:name": employeeDetails.username,
+        "custom:name": employeeDetails.name,
         //"custom:role": "admin",
         "custom:role":employeeDetails.role,
       };
@@ -144,12 +146,12 @@ export class EmployeeService {
         employeeDetails,
       };
     } else {
-      console.log("Error");
+      //console.log("Error");
       throw new IncorrectUsernameOrPasswordException(ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
     }
   };
 
- private generateAuthTokens = (payload: any) => {
+  private generateAuthTokens = (payload: any) => {
     return jsonwebtoken.sign(payload, process.env.JWT_TOKEN_SECRET, {
       expiresIn: process.env.ID_TOKEN_VALIDITY,
     });

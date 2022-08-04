@@ -1,7 +1,7 @@
 import { AbstractController } from "../util/rest/controller";
 import { NextFunction, Response } from "express";
 import RequestWithUser from "../util/rest/request";
-import APP_CONSTANTS from "../constants";
+import APP_CONSTANTS, { USER_ROLES } from "../constants";
 import { EmployeeService } from "../service/EmployeeService";
 import validationMiddleware from "../middleware/validationMiddleware";
 import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
@@ -21,34 +21,39 @@ class EmployeeController extends AbstractController {
   }
   protected initializeRoutes() {
     this.router.get(`${this.path}`,
-    authorize(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]),
+    authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
     this.getEmployee);
 
-    this.router.get(`${this.path}/:id`, 
-    authorize(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]),
+    this.router.get(`${this.path}/:id`,
+    authorize(["admin"]), 
+    //authorize(["APP_CONSTANTS.sde,APP_CONSTANTS.admin"]),
+    authorize([USER_ROLES.admin, USER_ROLES.manager]),
     validationMiddleware(GetEmployeeDto, APP_CONSTANTS.params),
     this.getEmployeeById);
 
     this.router.put(`${this.path}/:id`,
-    authorize([APP_CONSTANTS.admin]),
+   // authorize(["APP_CONSTANTS.admin"]),
+    authorize([USER_ROLES.admin]),
     validationMiddleware(UpdateEmployeeByIdDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     this.updateEmployeeById);
 
     this.router.delete(`${this.path}/:id`, 
-    authorize([APP_CONSTANTS.admin]),
+   // authorize(["APP_CONSTANTS.admin"]),
+   authorize([USER_ROLES.admin]),
     validationMiddleware(DeleteEmployeeDto, APP_CONSTANTS.params),
     this.deleteEmployeeById);
 
     this.router.post(
       `${this.path}`,
-      authorize(["APP_CONSTANTS.admin"]),
+     // authorize(["APP_CONSTANTS.admin"]),
+     authorize([USER_ROLES.admin]),
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       // this.asyncRouteHandler(this.createEmployee)
       this.createEmployee
     );
     this.router.post(`${this.path}/login`,
-    //validationMiddleware(LoginDto,APP_CONSTANTS.body),
+    // validationMiddleware(LoginDto,APP_CONSTANTS.body),
     this.login );
   }
   private getEmployee = async (
@@ -75,6 +80,7 @@ class EmployeeController extends AbstractController {
     try {
       const data: any = await this.employeeService.getEmployeeById(
         request.params.id
+        
       );
       response.status(200);
       response.send(
