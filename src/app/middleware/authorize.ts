@@ -24,7 +24,6 @@ const authorize = (permittedRoles?: string[]) => {
       if (!(permittedRoles.includes(decodedData["custom:role"]))) {
         throw new UserRoleInvalidException(ErrorCodes.UNAUTHORIZED)
       }
-      //const det = JSON.parse(JSON.stringify(data));
       return next();
     } catch (error) {
       return next(new UserNotAuthorizedException(ErrorCodes.UNAUTHORIZED));

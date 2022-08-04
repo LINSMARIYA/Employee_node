@@ -15,13 +15,14 @@ function validationMiddleware<T>(
 ): express.RequestHandler {
   return (req, res, next) => {
     let reqValidator: any;
-    // console.log(req.params);
     switch(parameter){
       case APP_CONSTANTS.body : reqValidator = req.body;
       break;
       case APP_CONSTANTS.params: reqValidator = req.params;
       break;
   }
+
+  
   const requestBody: any = plainToClass(type, reqValidator);
     validate(requestBody, {
       skipMissingProperties,
@@ -32,9 +33,9 @@ function validationMiddleware<T>(
         const errorDetail = ErrorCodes.VALIDATION_ERROR;
         next(
           new HttpException(400, errorDetail.MESSAGE, errorDetail.CODE, errors)
-          //next(errors);
+
         );
-        //
+
       } else {
         switch(parameter){
           case APP_CONSTANTS.body : req.body = requestBody;

@@ -1,4 +1,5 @@
 import { getConnection } from "typeorm";
+import { CreateDepartmentDto } from "../dto/CreateDepartmentDto";
 import { Department } from "../entities/Department";
 
 export class DepartmentRespository {
@@ -14,7 +15,7 @@ export class DepartmentRespository {
 
   public async updateDepartmentDetails(
     departmentId: string,
-    departmentDetails: any
+    departmentDetails: Department
   ) {
     const departmentRepo = getConnection().getRepository(Department);
     const updateDepartmentDetails = await departmentRepo.update(

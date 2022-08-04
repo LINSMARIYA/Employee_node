@@ -1,4 +1,5 @@
 import { getConnection } from "typeorm";
+import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
 import { Employee } from "../entities/Employee";
 
 export class EmployeeRespository {
@@ -18,7 +19,7 @@ export class EmployeeRespository {
   });
   }
 
-  public async updateEmployeeDetails(employeeId: string, employeeDetails: any) {
+  public async updateEmployeeDetails(employeeId: string, employeeDetails: Employee) {
     const employeeRepo = getConnection().getRepository(Employee);
     const updateEmployeeDetails = await employeeRepo.update(
       { id: employeeId, deletedAt: null },

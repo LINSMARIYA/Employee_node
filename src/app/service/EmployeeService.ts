@@ -44,7 +44,6 @@ export class EmployeeService {
       const newEmployee = plainToClass(Employee, {
         name: employeeDetails.name,
         username: employeeDetails.username,
-        // age: employeeDetails.age,
         status: employeeDetails.status,
         role:employeeDetails.role,
         address: newAddress,
@@ -58,7 +57,7 @@ export class EmployeeService {
       return save;
     } catch (err) {
      throw new HttpException(400, "Failed to create employee", "code-400");
-    //  throw err;
+
     }
   }
 
@@ -104,13 +103,11 @@ export class EmployeeService {
   public async softDeleteEmployeeById(id: string) {
     try{
       const employee=await this.employeeRepo.getEmployeeById(id)
-      const update=await this.employeeRepo.softDeleteEmployeeById(employee);
-      if(update){
-       throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);  
-     }
+      await this.employeeRepo.softDeleteEmployeeById(employee);
+      
   }
     catch(err){
-      throw err;
+      throw new HttpException(400, "Failed to delete employee", "code-400");
     }
   }
     
@@ -126,8 +123,6 @@ export class EmployeeService {
     );
     
     if (!employeeDetails) {
-      
-      // throw new UserNotAuthorizedException();
       throw new EntityNotFoundException(ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
     }
     const validPassword = await bcrypt.compare(password, employeeDetails.password);
@@ -136,7 +131,6 @@ export class EmployeeService {
       let payload = {
         "custom:id": employeeDetails.id,
         "custom:name": employeeDetails.name,
-        //"custom:role": "admin",
         "custom:role":employeeDetails.role,
       };
       const token = this.generateAuthTokens(payload);
@@ -146,7 +140,6 @@ export class EmployeeService {
         employeeDetails,
       };
     } else {
-      //console.log("Error");
       throw new IncorrectUsernameOrPasswordException(ErrorCodes.INCORECT_USERNAME_PASSWORD_ERROR);
     }
   };
