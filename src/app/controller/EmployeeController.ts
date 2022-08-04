@@ -53,7 +53,7 @@ class EmployeeController extends AbstractController {
       this.createEmployee
     );
     this.router.post(`${this.path}/login`,
-    // validationMiddleware(LoginDto,APP_CONSTANTS.body),
+    validationMiddleware(LoginDto,APP_CONSTANTS.body),
     this.login );
   }
   private getEmployee = async (

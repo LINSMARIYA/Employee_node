@@ -38,6 +38,7 @@ const CreateEmployeeDto_1 = require("../dto/CreateEmployeeDto");
 const typeorm_1 = require("typeorm");
 const Employee_1 = require("../entities/Employee");
 const authorize_1 = __importDefault(require("../middleware/authorize"));
+const LoginDto_1 = require("../dto/LoginDto");
 const GetEmployeeDto_1 = require("../dto/GetEmployeeDto");
 const UpdateEmployeeDto_1 = require("../dto/UpdateEmployeeDto");
 const DeleteEmployeeDto_1 = require("../dto/DeleteEmployeeDto");
@@ -113,7 +114,7 @@ class EmployeeController extends controller_1.AbstractController {
         this.router.put(`${this.path}/:id`, (0, authorize_1.default)([constants_1.USER_ROLES.admin]), (0, validationMiddleware_1.default)(UpdateEmployeeByIdDto_1.UpdateEmployeeByIdDto, constants_1.default.params), (0, validationMiddleware_1.default)(UpdateEmployeeDto_1.UpdateEmployeeDto, constants_1.default.body), this.updateEmployeeById);
         this.router.delete(`${this.path}/:id`, (0, authorize_1.default)([constants_1.USER_ROLES.admin]), (0, validationMiddleware_1.default)(DeleteEmployeeDto_1.DeleteEmployeeDto, constants_1.default.params), this.deleteEmployeeById);
         this.router.post(`${this.path}`, (0, authorize_1.default)([constants_1.USER_ROLES.admin]), (0, validationMiddleware_1.default)(CreateEmployeeDto_1.CreateEmployeeDto, constants_1.default.body), this.createEmployee);
-        this.router.post(`${this.path}/login`, this.login);
+        this.router.post(`${this.path}/login`, (0, validationMiddleware_1.default)(LoginDto_1.LoginDto, constants_1.default.body), this.login);
     }
     getEmployeeByUserName(userName) {
         return __awaiter(this, void 0, void 0, function* () {
