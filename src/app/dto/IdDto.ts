@@ -1,7 +1,7 @@
 
 import { IsNumber, IsString, IsUUID } from "class-validator";
 
-export class UpdateEmployeeByIdDto{
+export class IdDto{
     @IsUUID()
     public id: string;
 

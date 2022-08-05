@@ -21,7 +21,7 @@ export class DepartmentRespository {
     const updateDepartmentDetails = await departmentRepo.update(
       { id: departmentId, deletedAt: null },
       {
-        name: departmentDetails.name ? departmentDetails.name : undefined,
+        name: departmentDetails.name ,
       }
     );
     return updateDepartmentDetails;

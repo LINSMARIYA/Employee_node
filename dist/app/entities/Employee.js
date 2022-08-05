@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", String)
 ], Employee.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Employee.prototype, "username", void 0);
 __decorate([
@@ -37,8 +37,8 @@ __decorate([
     __metadata("design:type", String)
 ], Employee.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ nullable: false, type: "float" }),
+    __metadata("design:type", Number)
 ], Employee.prototype, "experience", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),

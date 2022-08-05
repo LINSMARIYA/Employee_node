@@ -24,16 +24,14 @@ export class EmployeeRespository {
     const updateEmployeeDetails = await employeeRepo.update(
       { id: employeeId, deletedAt: null },
       {
-        name: employeeDetails.name ? employeeDetails.name : undefined,
-        departmentId: employeeDetails.departmentId
-          ? employeeDetails.departmentId
-          : undefined,
+        name: employeeDetails.name ,
+        
       }
     );
     return updateEmployeeDetails;
   }
 
-  public async softDeleteEmployeeById(employee:Employee) {
+  public async softDeleteEmployee(employee:Employee) {
     const employeeRepo = getConnection().getRepository(Employee);
     return employeeRepo.softRemove(
       employee

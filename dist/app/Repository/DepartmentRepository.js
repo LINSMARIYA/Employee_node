@@ -29,7 +29,7 @@ class DepartmentRespository {
         return __awaiter(this, void 0, void 0, function* () {
             const departmentRepo = (0, typeorm_1.getConnection)().getRepository(Department_1.Department);
             const updateDepartmentDetails = yield departmentRepo.update({ id: departmentId, deletedAt: null }, {
-                name: departmentDetails.name ? departmentDetails.name : undefined,
+                name: departmentDetails.name,
             });
             return updateDepartmentDetails;
         });

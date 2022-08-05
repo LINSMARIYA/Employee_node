@@ -12,7 +12,7 @@ import { LoginDto } from "../dto/LoginDto";
 import { GetEmployeeDto } from "../dto/GetEmployeeDto";
 import { UpdateEmployeeDto } from "../dto/UpdateEmployeeDto";
 import { DeleteEmployeeDto } from "../dto/DeleteEmployeeDto";
-import { UpdateEmployeeByIdDto } from "../dto/UpdateEmployeeByIdDto";
+import { IdDto } from "../dto/IdDto";
 
 class EmployeeController extends AbstractController {
   constructor(private employeeService: EmployeeService) {
@@ -21,29 +21,28 @@ class EmployeeController extends AbstractController {
   }
   protected initializeRoutes() {
     this.router.get(`${this.path}`,
-    authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
+    //authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
     this.getEmployee);
 
     this.router.get(`${this.path}/:id`,
-    authorize(["admin"]), 
-    authorize([USER_ROLES.admin, USER_ROLES.manager]),
+    //authorize([USER_ROLES.admin, USER_ROLES.manager]),
     validationMiddleware(GetEmployeeDto, APP_CONSTANTS.params),
     this.getEmployeeById);
 
     this.router.put(`${this.path}/:id`,
-    authorize([USER_ROLES.admin]),
-    validationMiddleware(UpdateEmployeeByIdDto, APP_CONSTANTS.params),
+    //authorize([USER_ROLES.admin]),
+    validationMiddleware(IdDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     this.updateEmployeeById);
 
     this.router.delete(`${this.path}/:id`, 
-   authorize([USER_ROLES.admin]),
+    //authorize([USER_ROLES.admin]),
     validationMiddleware(DeleteEmployeeDto, APP_CONSTANTS.params),
     this.deleteEmployeeById);
 
     this.router.post(
       `${this.path}`,
-     authorize([USER_ROLES.admin]),
+      //authorize([USER_ROLES.admin]),
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       this.createEmployee
     );
@@ -111,7 +110,7 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     try {
-      const data: any = await this.employeeService.softDeleteEmployeeById(
+      const data: any = await this.employeeService.softDeleteEmployee(
         request.params.id
       );
       response.status(200);

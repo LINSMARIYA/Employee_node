@@ -7,7 +7,7 @@ export declare class Employee extends AbstractEntity {
     username: string;
     role: string;
     status: string;
-    experience: string;
+    experience: number;
     dateOfJoining: string;
     password: string;
     department: Department;

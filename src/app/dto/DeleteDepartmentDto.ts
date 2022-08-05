@@ -1,5 +1,5 @@
 
-import { IsNumber, IsString, IsUUID } from "class-validator";
+import { IsUUID } from "class-validator";
 
 export class DeleteDepartmentDto {
 

@@ -100,10 +100,10 @@ export class EmployeeService {
     }
   }
 
-  public async softDeleteEmployeeById(id: string) {
+  public async softDeleteEmployee(id: string) {
     try{
       const employee=await this.employeeRepo.getEmployeeById(id)
-      await this.employeeRepo.softDeleteEmployeeById(employee);
+      await this.employeeRepo.softDeleteEmployee(employee);
       
   }
     catch(err){

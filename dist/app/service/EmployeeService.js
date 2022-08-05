@@ -134,17 +134,14 @@ class EmployeeService {
             }
         });
     }
-    softDeleteEmployeeById(id) {
+    softDeleteEmployee(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const employee = yield this.employeeRepo.getEmployeeById(id);
-                const update = yield this.employeeRepo.softDeleteEmployeeById(employee);
-                if (update) {
-                    throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND);
-                }
+                yield this.employeeRepo.softDeleteEmployee(employee);
             }
             catch (err) {
-                throw err;
+                throw new HttpException_1.default(400, "Failed to delete employee", "code-400");
             }
         });
     }

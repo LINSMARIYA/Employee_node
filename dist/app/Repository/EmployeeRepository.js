@@ -34,15 +34,12 @@ class EmployeeRespository {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
             const updateEmployeeDetails = yield employeeRepo.update({ id: employeeId, deletedAt: null }, {
-                name: employeeDetails.name ? employeeDetails.name : undefined,
-                departmentId: employeeDetails.departmentId
-                    ? employeeDetails.departmentId
-                    : undefined,
+                name: employeeDetails.name,
             });
             return updateEmployeeDetails;
         });
     }
-    softDeleteEmployeeById(employee) {
+    softDeleteEmployee(employee) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
             return employeeRepo.softRemove(employee);

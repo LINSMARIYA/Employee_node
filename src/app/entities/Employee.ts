@@ -10,14 +10,14 @@ import { Department } from "./Department";
         public id: string;
         @Column({ nullable: false })
         public name: string;
-        @Column({ nullable: true })
+        @Column({ nullable: false })
         public username: string;
         @Column({ nullable: false })
         public role: string;
         @Column({ nullable: false })
         public status: string;
-        @Column({ nullable: false })
-        public experience: string;
+        @Column({ nullable: false ,type: "float"  })
+        public experience: number;
         @Column({ nullable: false })
         public dateOfJoining: string;
         @Column({ nullable: false,default:"password" })

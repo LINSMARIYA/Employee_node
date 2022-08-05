@@ -8,7 +8,7 @@ export declare class EmployeeService {
     getEmployeeById(id: string): Promise<Employee>;
     createEmployee(employeeDetails: CreateEmployeeDto): Promise<Employee>;
     updateEmployeeById(id: string, employeeDetails: any): Promise<import("typeorm").UpdateResult>;
-    softDeleteEmployeeById(id: string): Promise<void>;
+    softDeleteEmployee(id: string): Promise<void>;
     employeeLogin: (name: string, password: string) => Promise<{
         idToken: string;
         employeeDetails: Employee;
