@@ -2,12 +2,12 @@ import { plainToClass } from "class-transformer";
 import { Department } from "../entities/Department";
 import EntityNotFoundException from "../exception/EntityNotFoundException";
 import HttpException from "../exception/HttpException";
-import { DepartmentRespository } from "../Repository/DepartmentRepository";
+import { DepartmentRepository } from "../Repository/DepartmentRepository";
 import { ErrorCodes } from "../util/errorCode";
 
 
 export class DepartmentService {
-  constructor(private departmentRepo: DepartmentRespository) {}
+  constructor(private departmentRepo: DepartmentRepository) {}
   async getAllDepartments() {
     return await this.departmentRepo.getAllDepartments();
   }

@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DepartmentRespository = void 0;
+exports.DepartmentRepository = void 0;
 const typeorm_1 = require("typeorm");
 const Department_1 = require("../entities/Department");
-class DepartmentRespository {
+class DepartmentRepository {
     getAllDepartments() {
         return __awaiter(this, void 0, void 0, function* () {
             const departmentRepo = (0, typeorm_1.getConnection)().getRepository(Department_1.Department);
@@ -49,5 +49,5 @@ class DepartmentRespository {
         });
     }
 }
-exports.DepartmentRespository = DepartmentRespository;
+exports.DepartmentRepository = DepartmentRepository;
 //# sourceMappingURL=DepartmentRepository.js.map

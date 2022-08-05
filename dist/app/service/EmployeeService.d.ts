@@ -1,9 +1,9 @@
 import { Employee } from "../entities/Employee";
-import { EmployeeRespository } from "../Repository/EmployeeRepository";
+import { EmployeeRepository } from "../Repository/EmployeeRepository";
 import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
 export declare class EmployeeService {
     private employeeRepo;
-    constructor(employeeRepo: EmployeeRespository);
+    constructor(employeeRepo: EmployeeRepository);
     getAllEmployees(): Promise<Employee[]>;
     getEmployeeById(id: string): Promise<Employee>;
     createEmployee(employeeDetails: CreateEmployeeDto): Promise<Employee>;

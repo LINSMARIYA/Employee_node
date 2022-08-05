@@ -1,8 +1,8 @@
 /**
  * Wraps Controllers for easy import from other modules
  */
-import { DepartmentRespository } from "../Repository/DepartmentRepository";
-import { EmployeeRespository } from "../Repository/EmployeeRepository";
+import { DepartmentRepository } from "../Repository/DepartmentRepository";
+import { EmployeeRepository } from "../Repository/EmployeeRepository";
 import { DepartmentService } from "../service/DepartmentService";
 import { EmployeeService } from "../service/EmployeeService";
 import DepartmentController from "./DepartmentController";
@@ -12,8 +12,8 @@ export default [
   new HealthController(),
   new EmployeeController(
     new EmployeeService(
-      new EmployeeRespository()
+      new EmployeeRepository()
     )
   ),
-  new DepartmentController(new DepartmentService(new DepartmentRespository()))
+  new DepartmentController(new DepartmentService(new DepartmentRepository()))
 ];

@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EmployeeRespository = void 0;
+exports.EmployeeRepository = void 0;
 const typeorm_1 = require("typeorm");
 const Employee_1 = require("../entities/Employee");
-class EmployeeRespository {
+class EmployeeRepository {
     getAllEmployees() {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
@@ -61,5 +61,5 @@ class EmployeeRespository {
         });
     }
 }
-exports.EmployeeRespository = EmployeeRespository;
+exports.EmployeeRepository = EmployeeRepository;
 //# sourceMappingURL=EmployeeRepository.js.map

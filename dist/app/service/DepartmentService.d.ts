@@ -1,8 +1,8 @@
 import { Department } from "../entities/Department";
-import { DepartmentRespository } from "../Repository/DepartmentRepository";
+import { DepartmentRepository } from "../Repository/DepartmentRepository";
 export declare class DepartmentService {
     private departmentRepo;
-    constructor(departmentRepo: DepartmentRespository);
+    constructor(departmentRepo: DepartmentRepository);
     getAllDepartments(): Promise<Department[]>;
     getDepartmentById(id: string): Promise<Department>;
     createDepartment(departmentDetails: any): Promise<Department>;

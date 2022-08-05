@@ -2,7 +2,7 @@ import { getConnection } from "typeorm";
 import { CreateDepartmentDto } from "../dto/CreateDepartmentDto";
 import { Department } from "../entities/Department";
 
-export class DepartmentRespository {
+export class DepartmentRepository {
   async getAllDepartments(): Promise<Department[]> {
     const departmentRepo = getConnection().getRepository(Department);
     return departmentRepo.find();

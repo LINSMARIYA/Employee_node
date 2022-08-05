@@ -12,7 +12,7 @@ const EmployeeController_1 = __importDefault(require("./EmployeeController"));
 const HealthController_1 = __importDefault(require("./HealthController"));
 exports.default = [
     new HealthController_1.default(),
-    new EmployeeController_1.default(new EmployeeService_1.EmployeeService(new EmployeeRepository_1.EmployeeRespository())),
-    new DepartmentController_1.default(new DepartmentService_1.DepartmentService(new DepartmentRepository_1.DepartmentRespository()))
+    new EmployeeController_1.default(new EmployeeService_1.EmployeeService(new EmployeeRepository_1.EmployeeRepository())),
+    new DepartmentController_1.default(new DepartmentService_1.DepartmentService(new DepartmentRepository_1.DepartmentRepository()))
 ];
 //# sourceMappingURL=index.js.map

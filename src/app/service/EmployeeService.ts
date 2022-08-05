@@ -2,7 +2,7 @@ import { plainToClass } from "class-transformer";
 import { Employee } from "../entities/Employee";
 import EntityNotFoundException from "../exception/EntityNotFoundException";
 import HttpException from "../exception/HttpException";
-import { EmployeeRespository } from "../Repository/EmployeeRepository";
+import { EmployeeRepository } from "../Repository/EmployeeRepository";
 import bcrypt from "bcrypt";
 import  jsonwebtoken  from "jsonwebtoken";
 import { CustomError, ErrorCodes } from "../util/errorCode";
@@ -14,7 +14,7 @@ import { Address } from "../entities/Address";
 
 
 export class EmployeeService {
-  constructor(private employeeRepo: EmployeeRespository) {}
+  constructor(private employeeRepo: EmployeeRepository) {}
   async getAllEmployees() {
     return await this.employeeRepo.getAllEmployees();
   }

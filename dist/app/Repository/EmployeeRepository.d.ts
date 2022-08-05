@@ -1,5 +1,5 @@
 import { Employee } from "../entities/Employee";
-export declare class EmployeeRespository {
+export declare class EmployeeRepository {
     getAllEmployees(): Promise<Employee[]>;
     getEmployeeById(id: string): Promise<Employee>;
     updateEmployeeDetails(employeeId: string, employeeDetails: Employee): Promise<import("typeorm").UpdateResult>;

@@ -1,5 +1,5 @@
 import { Department } from "../entities/Department";
-export declare class DepartmentRespository {
+export declare class DepartmentRepository {
     getAllDepartments(): Promise<Department[]>;
     getDepartmentById(id: string): Promise<Department>;
     updateDepartmentDetails(departmentId: string, departmentDetails: Department): Promise<import("typeorm").UpdateResult>;
