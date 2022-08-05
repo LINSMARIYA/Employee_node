@@ -61,7 +61,7 @@ export class EmployeeService {
     }
   }
 
-  public async updateEmployeeById(id: string, employeeDetails: any) {
+  public async updateEmployeeById(id: string, employeeDetails:Employee) {
     try {
         await this.getEmployeeById(id);
         

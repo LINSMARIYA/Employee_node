@@ -17,7 +17,7 @@ const authorize = (permittedRoles?: string[]) => {
       const token = getTokenFromRequestHeader(req);
       jsonwebtoken.verify(token, process.env.JWT_TOKEN_SECRET);
 
-      const data :any = jsonwebtoken.decode(token);
+      const data  = jsonwebtoken.decode(token);
 
       const decodedData = JSON.parse(JSON.stringify(data));
 

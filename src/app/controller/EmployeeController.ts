@@ -21,28 +21,28 @@ class EmployeeController extends AbstractController {
   }
   protected initializeRoutes() {
     this.router.get(`${this.path}`,
-    //authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
+    authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
     this.getEmployee);
 
     this.router.get(`${this.path}/:id`,
-    //authorize([USER_ROLES.admin, USER_ROLES.manager]),
+    authorize([USER_ROLES.admin, USER_ROLES.manager]),
     validationMiddleware(GetEmployeeDto, APP_CONSTANTS.params),
     this.getEmployeeById);
 
     this.router.put(`${this.path}/:id`,
-    //authorize([USER_ROLES.admin]),
+    authorize([USER_ROLES.admin]),
     validationMiddleware(IdDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
     this.updateEmployeeById);
 
     this.router.delete(`${this.path}/:id`, 
-    //authorize([USER_ROLES.admin]),
+    authorize([USER_ROLES.admin]),
     validationMiddleware(DeleteEmployeeDto, APP_CONSTANTS.params),
     this.deleteEmployeeById);
 
     this.router.post(
       `${this.path}`,
-      //authorize([USER_ROLES.admin]),
+      authorize([USER_ROLES.admin]),
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       this.createEmployee
     );
@@ -56,7 +56,7 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     try {
-      const data: any = await this.employeeService.getAllEmployees();
+      const data = await this.employeeService.getAllEmployees();
       response.status(200);
       response.send(
         this.fmt.formatResponse(data, Date.now() - request.startTime, "OK", 1)
@@ -72,7 +72,7 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     try {
-      const data: any = await this.employeeService.getEmployeeById(
+      const data = await this.employeeService.getEmployeeById(
         request.params.id
         
       );
@@ -91,7 +91,7 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     try {
-      const data: any = await this.employeeService.updateEmployeeById(
+      const data = await this.employeeService.updateEmployeeById(
         request.params.id,
         request.body
       );
@@ -110,7 +110,7 @@ class EmployeeController extends AbstractController {
     next: NextFunction
   ) => {
     try {
-      const data: any = await this.employeeService.softDeleteEmployee(
+      const data = await this.employeeService.softDeleteEmployee(
         request.params.id
       );
       response.status(200);
@@ -138,13 +138,7 @@ class EmployeeController extends AbstractController {
     }
   };
 
-  public async getEmployeeByUserName(userName: string) {
-    const employeeRepo = getConnection().getRepository(Employee);
-    const employeeDetail = await employeeRepo.findOne({
-        where: { name: userName },
-    });
-    return employeeDetail;
-}
+
 
   private login = async (
     request: RequestWithUser,
