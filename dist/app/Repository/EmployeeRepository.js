@@ -30,13 +30,21 @@ class EmployeeRepository {
             });
         });
     }
-    updateEmployeeDetails(employeeId, employeeDetails) {
+    getEmployeeByRole(role) {
         return __awaiter(this, void 0, void 0, function* () {
             const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
-            const updateEmployeeDetails = yield employeeRepo.update({ id: employeeId, deletedAt: null }, {
-                name: employeeDetails.name,
+            return employeeRepo.find({
+                where: {
+                    role
+                },
             });
-            return updateEmployeeDetails;
+        });
+    }
+    updateEmployee(employeeId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const employeeRepo = (0, typeorm_1.getConnection)().getRepository(Employee_1.Employee);
+            const data = yield employeeRepo.save(employeeId);
+            return data;
         });
     }
     softDeleteEmployee(employee) {

@@ -6,7 +6,8 @@ declare class EmployeeController extends AbstractController {
     protected initializeRoutes(): void;
     private getEmployee;
     private getEmployeeById;
-    private updateEmployeeById;
+    private getEmployeeByRole;
+    private updateEmployee;
     private deleteEmployeeById;
     private createEmployee;
     private login;

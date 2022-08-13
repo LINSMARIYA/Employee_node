@@ -20,34 +20,47 @@ class EmployeeController extends AbstractController {
     this.initializeRoutes();
   }
   protected initializeRoutes() {
+
     this.router.get(`${this.path}`,
-    authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
+   // authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
     this.getEmployee);
 
+ 
+/////////////////////////////////////////////=================
+    this.router.get(`${this.path}/:role`,
+    // authorize([USER_ROLES.admin, USER_ROLES.manager]),
+    // validationMiddleware(GetEmployeeDto, APP_CONSTANTS.params),
+    this.getEmployeeByRole);
+
+//////////////////////////////////////////////======================
+    console.log("Hello")
     this.router.get(`${this.path}/:id`,
-    authorize([USER_ROLES.admin, USER_ROLES.manager]),
+    //authorize([USER_ROLES.admin, USER_ROLES.manager]),
     validationMiddleware(GetEmployeeDto, APP_CONSTANTS.params),
     this.getEmployeeById);
 
+  
+
+
     this.router.put(`${this.path}/:id`,
-    authorize([USER_ROLES.admin]),
+    //authorize([USER_ROLES.admin]),
     validationMiddleware(IdDto, APP_CONSTANTS.params),
     validationMiddleware(UpdateEmployeeDto, APP_CONSTANTS.body),
-    this.updateEmployeeById);
+    this.updateEmployee);
 
     this.router.delete(`${this.path}/:id`, 
-    authorize([USER_ROLES.admin]),
+    // authorize([USER_ROLES.admin]),
     validationMiddleware(DeleteEmployeeDto, APP_CONSTANTS.params),
     this.deleteEmployeeById);
 
     this.router.post(
       `${this.path}`,
-      authorize([USER_ROLES.admin]),
+      //authorize([USER_ROLES.admin]),
       validationMiddleware(CreateEmployeeDto, APP_CONSTANTS.body),
       this.createEmployee
     );
     this.router.post(`${this.path}/login`,
-    validationMiddleware(LoginDto,APP_CONSTANTS.body),
+    //validationMiddleware(LoginDto,APP_CONSTANTS.body),
     this.login );
   }
   private getEmployee = async (
@@ -85,15 +98,19 @@ class EmployeeController extends AbstractController {
     }
   };
 
-  private updateEmployeeById = async (
+
+
+  //============================================================================
+  
+  private getEmployeeByRole = async (
     request: RequestWithUser,
     response: Response,
     next: NextFunction
   ) => {
     try {
-      const data = await this.employeeService.updateEmployeeById(
-        request.params.id,
-        request.body
+      const data = await this.employeeService.getEmployeeByRole(
+        request.params.role,
+      
       );
       response.status(200);
       response.send(
@@ -103,6 +120,23 @@ class EmployeeController extends AbstractController {
       return next(error);
     }
   };
+
+
+  //==============================================================================
+  private updateEmployee = async (
+    request: RequestWithUser,
+    response: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const data = await this.employeeService.updateEmployee(request.body, request.params.id);
+      response.send(
+        this.fmt.formatResponse(data, Date.now() - request.startTime, "OK")
+      );
+    } catch (err) {
+      next(err)
+    }
+  }
 
   private deleteEmployeeById = async (
     request: RequestWithUser,

@@ -98,40 +98,13 @@ class EmployeeService {
             }
         });
     }
-    updateEmployeeById(id, employeeDetails) {
+    getEmployeeByRole(role) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.getEmployeeById(id);
-                const newAddress = (0, class_transformer_1.plainToClass)(Address_1.Address, {
-                    id: employeeDetails.address.id,
-                    line1: employeeDetails.address.line1,
-                    line2: employeeDetails.address.line2,
-                    city: employeeDetails.address.city,
-                    state: employeeDetails.address.state,
-                    country: employeeDetails.address.country,
-                    pincode: employeeDetails.address.pincode
-                });
-                const updatedEmployee = (0, class_transformer_1.plainToClass)(Employee_1.Employee, {
-                    name: employeeDetails.name,
-                    departmentId: employeeDetails.departmentId,
-                    role: employeeDetails.role,
-                    status: employeeDetails.status,
-                    experience: employeeDetails.experience,
-                    dateOfJoining: employeeDetails.dateOfJoining,
-                    username: employeeDetails.username,
-                    address: newAddress,
-                    password: employeeDetails.password,
-                    isActive: true,
-                });
-                const updated = yield this.employeeRepo.updateEmployeeDetails(id, updatedEmployee);
-                if (updated.affected === 0)
-                    throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.EMPLOYEE_NOT_FOUND);
-                else
-                    return updated;
+            const employee = yield this.employeeRepo.getEmployeeByRole(role);
+            if (!employee) {
+                throw new EntityNotFoundException_1.default(errorCode_1.ErrorCodes.EMPLOYEES_WITH_ROLE_NOT_FOUND);
             }
-            catch (err) {
-                throw new HttpException_1.default(400, "Failed to update employee", "code-400");
-            }
+            return employee;
         });
     }
     softDeleteEmployee(id) {
@@ -142,6 +115,38 @@ class EmployeeService {
             }
             catch (err) {
                 throw new HttpException_1.default(400, "Failed to delete employee", "code-400");
+            }
+        });
+    }
+    updateEmployee(employeeDetails, employeeId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const updatedEmpAddress = (0, class_transformer_1.plainToClass)(Address_1.Address, {
+                    id: employeeDetails.address.id,
+                    line1: employeeDetails.address.line1,
+                    line2: employeeDetails.address.line2,
+                    city: employeeDetails.address.city,
+                    state: employeeDetails.address.state,
+                    country: employeeDetails.address.country,
+                    pincode: employeeDetails.address.pincode,
+                });
+                const updatedEmployee = (0, class_transformer_1.plainToClass)(Employee_1.Employee, {
+                    id: employeeId,
+                    name: employeeDetails.name,
+                    username: employeeDetails.username,
+                    password: employeeDetails.password ? yield bcrypt_1.default.hash(employeeDetails.password, 10) : '',
+                    dateofjoining: employeeDetails.dateOfJoining,
+                    experience: employeeDetails.experience,
+                    status: employeeDetails.status,
+                    role: employeeDetails.role,
+                    departmentId: employeeDetails.departmentId,
+                    address: updatedEmpAddress
+                });
+                const save = yield this.employeeRepo.updateEmployee(updatedEmployee);
+                return save;
+            }
+            catch (err) {
+                throw new HttpException_1.default(400, "Failed to update employee", "code-400");
             }
         });
     }

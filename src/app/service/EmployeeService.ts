@@ -10,6 +10,7 @@ import UserNotAuthorizedException from "../exception/UserNotAuthorizedException"
 import IncorrectUsernameOrPasswordException from "../exception/IncorrectUsernameOrPasswordException";
 import { CreateEmployeeDto } from "../dto/CreateEmployeeDto";
 import { Address } from "../entities/Address";
+import { UpdateEmployeeDto } from "../dto/UpdateEmployeeDto";
 
 
 
@@ -60,45 +61,21 @@ export class EmployeeService {
 
     }
   }
+//==========================================================
 
-  public async updateEmployeeById(id: string, employeeDetails:Employee) {
-    try {
-        await this.getEmployeeById(id);
-        
-        const newAddress = plainToClass(Address,{
-          id: employeeDetails.address.id,
-          line1: employeeDetails.address.line1,
-          line2: employeeDetails.address.line2,
-          city: employeeDetails.address.city,
-          state: employeeDetails.address.state,
-          country: employeeDetails.address.country,
-          pincode: employeeDetails.address.pincode
-        });
-
-        const updatedEmployee = plainToClass(Employee, {
-        name: employeeDetails.name,
-        departmentId: employeeDetails.departmentId,
-        role:employeeDetails.role,
-        status:employeeDetails.status,
-        experience:employeeDetails.experience,
-        dateOfJoining:employeeDetails.dateOfJoining,
-        username:employeeDetails.username,
-        address: newAddress,
-        password:employeeDetails.password,
-        isActive: true,
-      });
-      const updated = await this.employeeRepo.updateEmployeeDetails(
-        id,
-        updatedEmployee
-      );
-      if(updated.affected===0)
-      throw new EntityNotFoundException(ErrorCodes.EMPLOYEE_NOT_FOUND);
-      else
-      return updated;
-    } catch (err) {
-      throw new HttpException(400, "Failed to update employee", "code-400");
-    }
+  public async getEmployeeByRole(role: string) {
+    const employee=await this.employeeRepo.getEmployeeByRole(role);
+    if(!employee){
+      throw new EntityNotFoundException(ErrorCodes.EMPLOYEES_WITH_ROLE_NOT_FOUND);
   }
+    return employee;
+  }
+
+
+//==========================================================================
+ 
+
+ 
 
   public async softDeleteEmployee(id: string) {
     try{
@@ -110,7 +87,37 @@ export class EmployeeService {
       throw new HttpException(400, "Failed to delete employee", "code-400");
     }
   }
-    
+
+  public async updateEmployee(employeeDetails: UpdateEmployeeDto, employeeId: string):Promise<Employee> {
+    try {
+        const updatedEmpAddress = plainToClass(Address, {
+            id: employeeDetails.address.id,
+            line1: employeeDetails.address.line1,
+            line2: employeeDetails.address.line2,
+            city: employeeDetails.address.city,
+            state: employeeDetails.address.state,
+            country: employeeDetails.address.country,
+            pincode: employeeDetails.address.pincode,
+        })
+        const updatedEmployee = plainToClass(Employee, {
+            id: employeeId,
+            name: employeeDetails.name,
+            username: employeeDetails.username,
+            password: employeeDetails.password ? await bcrypt.hash(employeeDetails.password, 10) : '',
+            dateofjoining: employeeDetails.dateOfJoining,
+            experience: employeeDetails.experience,
+            status: employeeDetails.status,
+            role: employeeDetails.role,
+            departmentId: employeeDetails.departmentId,
+            address: updatedEmpAddress
+        })
+        
+        const save = await this.employeeRepo.updateEmployee(updatedEmployee);
+        return save;
+    } catch (err) {
+      throw new HttpException(400, "Failed to update employee", "code-400");
+    }
+}
   
   
   public employeeLogin = async (

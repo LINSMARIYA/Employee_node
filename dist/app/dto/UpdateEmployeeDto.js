@@ -10,7 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateEmployeeDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
+const Address_1 = require("../entities/Address");
+const UpdateAddressDto_1 = require("./UpdateAddressDto");
 class UpdateEmployeeDto {
 }
 __decorate([
@@ -22,21 +25,17 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateEmployeeDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], UpdateEmployeeDto.prototype, "experience", void 0);
-__decorate([
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], UpdateEmployeeDto.prototype, "departmentId", void 0);
-__decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdateEmployeeDto.prototype, "password", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateEmployeeDto.prototype, "role", void 0);
+], UpdateEmployeeDto.prototype, "dateOfJoining", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], UpdateEmployeeDto.prototype, "experience", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
@@ -44,6 +43,15 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateEmployeeDto.prototype, "dateOfJoining", void 0);
+], UpdateEmployeeDto.prototype, "role", void 0);
+__decorate([
+    (0, class_validator_1.IsUUID)(),
+    __metadata("design:type", String)
+], UpdateEmployeeDto.prototype, "departmentId", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => UpdateAddressDto_1.UpdateAddressDto),
+    __metadata("design:type", Address_1.Address)
+], UpdateEmployeeDto.prototype, "address", void 0);
 exports.UpdateEmployeeDto = UpdateEmployeeDto;
 //# sourceMappingURL=UpdateEmployeeDto.js.map

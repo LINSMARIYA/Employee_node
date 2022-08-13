@@ -19,17 +19,30 @@ export class EmployeeRepository {
   });
   }
 
-  public async updateEmployeeDetails(employeeId: string, employeeDetails: Employee) {
+
+//========================================================================
+  async getEmployeeByRole(role: string): Promise<Employee[]> {
     const employeeRepo = getConnection().getRepository(Employee);
-    const updateEmployeeDetails = await employeeRepo.update(
-      { id: employeeId, deletedAt: null },
-      {
-        name: employeeDetails.name ,
-        
-      }
-    );
-    return updateEmployeeDetails;
-  }
+    // console.log("in repo")
+    return employeeRepo.find({
+      where: {
+        role
+    },
+   
+});
+}
+
+
+//===============================================
+
+
+
+  public async updateEmployee(employeeId: Employee): Promise<Employee> {
+    const employeeRepo = getConnection().getRepository(Employee);
+    const data = await employeeRepo.save(employeeId)
+    //const updatedData = await employeeRepo.findOne(employeeId.id)
+    return data;
+}
 
   public async softDeleteEmployee(employee:Employee) {
     const employeeRepo = getConnection().getRepository(Employee);

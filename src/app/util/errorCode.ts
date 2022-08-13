@@ -14,6 +14,10 @@ export const ErrorCodes: { [key: string]: CustomError } = {
         CODE: "EMPLOYEE_WITH_ID_NOT_FOUND",
         MESSAGE: "Employee with given id not found",
     },
+    EMPLOYEES_WITH_ROLE_NOT_FOUND: {
+        CODE: "EMPLOYEE_WITH_ROLE_NOT_FOUND",
+        MESSAGE: "Employee with given role not found",
+    },
     DEPARTMENT_NOT_FOUND: {
         CODE: "DEPARTMENT_NOT_FOUND",
         MESSAGE: "Department  not found",
@@ -30,7 +34,7 @@ export const ErrorCodes: { [key: string]: CustomError } = {
         CODE: "INCORRECT_USERNAME_AND_PASSWORD_ERROR",
         MESSAGE: "Username or Password wrong",
     }
-
+   
 
 };
 

@@ -18,19 +18,19 @@ export class DepartmentController extends AbstractController {
   }
   protected initializeRoutes() {
     this.router.get(`${this.path}`, 
-    authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
+    //authorize([USER_ROLES.admin, USER_ROLES.manager, USER_ROLES.developer, USER_ROLES.engineer]),
     this.getDepartment);
 
     this.router.get(
       `${this.path}/:id`,
-      authorize([USER_ROLES.admin, USER_ROLES.manager]),
+      //authorize([USER_ROLES.admin, USER_ROLES.manager]),
       validationMiddleware(GetDepartmentDto, APP_CONSTANTS.params), 
       this.getDepartmentById
     );
 
     this.router.put(
       `${this.path}/:id`,
-     authorize([USER_ROLES.admin]),
+     //authorize([USER_ROLES.admin]),
       validationMiddleware(IdDto, APP_CONSTANTS.params),
       validationMiddleware(UpdateDepartmentDto, APP_CONSTANTS.body),
       this.updateDepartmentById
@@ -38,14 +38,14 @@ export class DepartmentController extends AbstractController {
 
     this.router.delete(
       `${this.path}/:id`,
-      authorize([USER_ROLES.admin]),
+     // authorize([USER_ROLES.admin]),
       validationMiddleware(DeleteDepartmentDto, APP_CONSTANTS.params),
       this.deleteDepartmentById
     );
 
     this.router.post(
       `${this.path}`,
-      authorize([USER_ROLES.admin]),
+      //authorize([USER_ROLES.admin]),
       validationMiddleware(CreateDepartmentDto, APP_CONSTANTS.body),
       this.createDepartment
     );
